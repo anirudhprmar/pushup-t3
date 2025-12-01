@@ -5,6 +5,9 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
+import { Providers } from "./providers";
+import { Analytics } from "@vercel/analytics/next"
+
 
 
 export const metadata: Metadata = {
@@ -23,9 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
+        <Providers>
         <TRPCReactProvider>{children}
           <Toaster/>
+          <Analytics />
         </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );

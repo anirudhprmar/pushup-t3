@@ -5,13 +5,14 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 ## Todo
 
-- [X]- move to t3 stack
-- [ ]- change db to supabase
+- [X]- add all the necessary dependencies
 - [ ]- dashboard 
 - [ ]- user authentication
+- [ ]- change db to supabase
 - [ ]- create different routes (leaderboard,profile,accountability & connect to A 100)
 - [ ]- create a sidebar
-- [ ]- landing page redesign
+- [ ]- landing page redesign 
+- [ ]- re-deploy to vercel with all the envs
 - [ ]- ui/ux of the app
 - [ ]- implement onboarding flow
 
