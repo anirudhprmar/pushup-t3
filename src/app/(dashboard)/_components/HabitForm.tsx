@@ -1,16 +1,10 @@
 "use client"
+
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card"
 
 import {
   InputGroup,
@@ -40,9 +34,21 @@ const formSchema = z.object({
     .optional()
 })
 
+import { PlusIcon } from "lucide-react"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog"
 
 export function HabitForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+
+      const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -50,7 +56,8 @@ export function HabitForm() {
       description: "",
     },
   })
-//   const queryClient = useQueryClient()
+
+  //   const queryClient = useQueryClient()
 
 //   const { mutate: create, isPending } = useMutation({
 //     mutationFn: async ({ name,goal,description }: { name: string,goal:string,description:string }) => {
@@ -62,14 +69,14 @@ export function HabitForm() {
 //     },
 //   })
 
-  const trpc = api.useUtils()
+     const trpc = api.useUtils()
   const create = api.habit.create.useMutation({
     onSuccess:async()=>{
       await trpc.habit.invalidate()
     }
   })
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+      async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
         const createHabit = await create.mutateAsync({
             name:data.name,
@@ -99,13 +106,19 @@ export function HabitForm() {
     }
   }
   return (
-    <Card className="w-full sm:max-w-md">
-      <CardHeader>
-        <CardTitle>Create Habit</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <form id="habit-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <Dialog>
+      <form>
+        <DialogTrigger asChild>
+          <Button variant="default" className="mt-4 flex items-center gap-2 w-full hover:scale-110 active:scale-95 transition-all duration-200 "><PlusIcon/>Create New Habit</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create New Habit</DialogTitle>
+            <DialogDescription>
+              Create and commmit to your habits
+            </DialogDescription>
+          </DialogHeader>
+            <form id="habit-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
               name="name"
@@ -180,17 +193,14 @@ export function HabitForm() {
           </FieldGroup>
           
         </form>
-      </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal">
-          {/* <Button type="button" variant="outline" onClick={() => }>
-            Cancel
-          </Button> */}
-          <Button type="submit" form="habit-form">
-            Submit
-          </Button>
-        </Field>
-      </CardFooter>
-    </Card>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+              <Button type="submit" form="habit-form">Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </form>
+    </Dialog>
   )
 }

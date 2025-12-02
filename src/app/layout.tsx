@@ -1,7 +1,8 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Crimson_Pro } from "next/font/google";
+import { Lato } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
@@ -15,16 +16,21 @@ export const metadata: Metadata = {
   description: "Build habits and cultivate a new lifestyle",
 }
 
-const geist = Geist({
+const crimsonPro = Crimson_Pro({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-crimson-pro",
+});
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
+  variable: "--font-lato",
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`${lato.className} ${crimsonPro.className}`} suppressHydrationWarning>
       <body>
         <Providers>
         <TRPCReactProvider>{children}

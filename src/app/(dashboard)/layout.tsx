@@ -2,6 +2,8 @@
 // import { redirect } from "next/navigation"
 // import { AppSidebar } from "~/components/app-sidebar"
 
+import DashboardSideBar from "./_components/Sidebar";
+
 // import { SiteHeader } from "~/components/site-header"
 // import {
 //   SidebarInset,
@@ -26,31 +28,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
    <>
-   <div className="flex flex-1 flex-col">
-         {children}
+    <div className="flex h-screen overflow-hidden w-full">
+      <DashboardSideBar />
+      <main className="flex-1 overflow-y-auto">
+          {children}
+      </main>
     </div>
    </>
   )
 }
-
-//   return (
-//     <div>
-//         <SidebarProvider
-//       style={
-//         {
-//           "--sidebar-width": "calc(var(--spacing) * 72)",
-//           "--header-height": "calc(var(--spacing) * 12)",
-//         } as React.CSSProperties
-//       }
-//     >
-//       <AppSidebar variant="inset" username={username} email={email} avatar={avatar} subscriptionStatus={subscriptionStatus} />
-//       <SidebarInset>
-//         <SiteHeader />
-//         <div className="flex flex-1 flex-col">
-//          {children}
-//         </div>
-//       </SidebarInset>
-//     </SidebarProvider>
-//     </div>
-//   )
-// }
