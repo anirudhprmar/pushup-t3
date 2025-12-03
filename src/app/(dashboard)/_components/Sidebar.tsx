@@ -98,10 +98,10 @@ export default function DashboardSideBar() {
           <div className="flex flex-col gap-2 w-full">
             <div className="px-4">
               <div
-                onClick={() => router.push("/dashboard/settings")}
+                onClick={() => router.push("/settings")}
                 className={clsx(
                   "flex items-center w-full gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:cursor-pointer",
-                  pathname === "/dashboard/settings"
+                  pathname === "/settings"
                     ? "bg-primary/10 text-primary hover:bg-primary/20"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}

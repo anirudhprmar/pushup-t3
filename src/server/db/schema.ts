@@ -27,10 +27,6 @@ export const user = createTable(
      updatedAt: d.timestamp("updated_at")
        .$defaultFn(() => new Date())
        .notNull(),
-    role: d.text("role"),
-    banned: d.boolean("banned"),
-    banReason: d.text("ban_reason"),
-    banExpires: d.timestamp("ban_expires"),
   }),
   (t) => [index("email_idx").on(t.email)],
 ) 

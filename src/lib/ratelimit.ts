@@ -24,6 +24,14 @@ export const rlUpload = new Ratelimit({
   prefix: "rl_upload",
 });
 
+// tRPC procedures
+// export const rlTRPC = new Ratelimit({
+//   redis,
+//   limiter: Ratelimit.slidingWindow(120, "1 m"),
+//   analytics: true,
+//   prefix: "rl_trpc",
+// });
+
 // Small util to extract IP
 export function getClientIP(req: Request | { headers: Headers; ip?: string }) {
   // NextRequest has .ip; also honor proxy headers

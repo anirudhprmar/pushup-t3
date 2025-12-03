@@ -1,11 +1,11 @@
 import { eq } from 'drizzle-orm';
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure} from "~/server/api/trpc";
 import { habit } from "~/server/db/schema";
 
 export const habitRouter = createTRPCRouter({
-  habits: publicProcedure
+  habits: protectedProcedure
     .input(z.object({ userId:z.string().min(1) }))
     .query(async ({ ctx,input }) => {
     const {userId}=input
@@ -17,7 +17,7 @@ export const habitRouter = createTRPCRouter({
     return data;
     }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(z.object({
         name: z.string().min(1),
         goal: z.string().min(1),

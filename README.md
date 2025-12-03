@@ -5,8 +5,10 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 ## Todo
 
-- [X]- dashboard 
-- [ ]- user authentication
+
+- [X]- user authentication (protected procedures, implement auth flow for users)
+- [ ]- use full trpc capabilities 
+- [ ]- completed dashboard interactions with habit.
 - [ ]- create different routes (leaderboard,profile,accountability)
 - [ ]- landing page redesign 
 - [ ]- re-deploy to vercel with all the envs

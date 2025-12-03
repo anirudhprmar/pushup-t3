@@ -39,7 +39,7 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
       const result = await authClient.getSession();
 
       if (!result.data?.user) {
-        // router.push("/sign-in");
+        router.push("/login");
         return console.error("No user session found.");
       }
 
@@ -60,7 +60,7 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/sign-in"); // redirect to login page
+          router.push("/login"); // redirect to login page
         },
       },
     });
@@ -115,13 +115,13 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/dashboard/settings?tab=profile">
+          <Link href="/settings?tab=profile">
             <DropdownMenuItem>
               Profile
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
-          <Link href="/dashboard/settings?tab=billing">
+          <Link href="/settings?tab=billing">
             <DropdownMenuItem>
               Billing
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>

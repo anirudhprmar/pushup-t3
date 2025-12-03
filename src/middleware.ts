@@ -25,16 +25,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (sessionCookie && ["/sign-in", "/sign-up"].includes(pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (sessionCookie && ["/login"].includes(pathname)) {
+    return NextResponse.redirect(new URL("/home", request.url));
   }
 
-  if (!sessionCookie && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  if (!sessionCookie && pathname.startsWith("/home")) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/sign-in", "/sign-up"] //later add all the dashboard routes
+  matcher: ["/login","/home","/leaderboard","/accountability","/notifications"] 
 };

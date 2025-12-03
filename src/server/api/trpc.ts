@@ -6,10 +6,11 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
+import { headers } from "next/headers";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
+import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 
 /**
@@ -25,8 +26,12 @@ import { db } from "~/server/db";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const session = await auth.api.getSession({
+    headers:await headers()
+  })
   return {
     db,
+    session,
     ...opts,
   };
 };
@@ -96,6 +101,19 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
+
+// TRPC rate limit middleware
+
+// const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
+//   // Prefer userId; fallback to IP from ctx if you have it in context
+//   const key = `trpc:${ctx.session?.user?.id ?? ctx.ip ?? "anon"}:${path}`;
+//   const { success } = await rlTRPC.limit(key);
+//   if (!success) {
+//     throw new TRPCError({ code: "TOO_MANY_REQUESTS", message: "Rate limit exceeded" });
+//   }
+//   return next();
+// });
+
 /**
  * Public (unauthenticated) procedure
  *
@@ -104,3 +122,28 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * PROTECTED: Requires authentication
+ * Context guarantees user exists (TypeScript knows ctx.user is NOT null)
+ */
+
+export const protectedProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(({ ctx, next }) => {
+    if (!ctx.session?.user?.id) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return next({
+      ctx: {
+        session: { 
+          ...ctx.session, 
+          user: { 
+            ...ctx.session.user,
+            id: ctx.session.user.id 
+          } 
+        },
+        userId:ctx.session.user.id
+      },
+    });
+  });

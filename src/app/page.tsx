@@ -23,7 +23,7 @@ export default function Landing() {
             </div>
             <span className="text-xl font-bold">PushUp</span>
           </div>
-          <Link href="/dashboard">
+          <Link href="/login">
             <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90">
               Get Started
             </Button>
@@ -55,7 +55,7 @@ export default function Landing() {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4">
-            <Link href="/dashboard">
+            <Link href="/login">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-8 h-12 text-base">
                 Get Started <ArrowRight className="w-5 h-5" />
               </Button>
