@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { api } from "~/lib/api";
 
-export default function UserProfile({ mini }: { mini?: boolean }) {
+export default function UserProfile({ mini, showName = false }: { mini?: boolean; showName?: boolean }) {
   const router = useRouter();
   
   // Use tRPC query hook for automatic caching, loading, and error states
@@ -40,11 +40,14 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
   if (error) {
     return (
       <div
-        className={`flex gap-2 justify-start items-center w-full rounded ${mini ? "" : "px-4 pt-2 pb-3"}`}
+        className={`flex gap-3 justify-start items-center w-full rounded overflow-hidden whitespace-nowrap ${mini ? "px-2 py-2" : "px-4 pt-2 pb-3"}`}
       >
-        <div className="text-red-500 text-sm flex-1">
-          {mini ? "Error" : error.message || "Failed to load user profile"}
-        </div>
+        <div className="text-red-500 text-sm shrink-0">⚠️</div>
+        {!mini && (
+          <div className={`text-red-500 text-sm transition-opacity duration-300 ${showName ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+            {error.message || "Failed to load user profile"}
+          </div>
+        )}
       </div>
     );
   }
@@ -53,9 +56,9 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className={`flex gap-2 justify-start items-center w-full rounded ${mini ? "" : "px-4 pt-2 pb-3"}`}
+          className={`flex gap-3 justify-start items-center w-full rounded hover:cursor-pointer overflow-hidden whitespace-nowrap ${mini ? "px-2 py-2" : "px-4 pt-2 pb-3"}`}
         >
-          <Avatar>
+          <Avatar className="shrink-0">
             {isLoading ? (
               <div className="flex items-center justify-center w-full h-full">
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -73,7 +76,7 @@ export default function UserProfile({ mini }: { mini?: boolean }) {
             )}
           </Avatar>
           {mini ? null : (
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 transition-opacity duration-300 ${showName ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
               <p className="font-medium text-md">
                 {isLoading ? "Loading..." : userInfo?.name ?? "User"}
               </p>

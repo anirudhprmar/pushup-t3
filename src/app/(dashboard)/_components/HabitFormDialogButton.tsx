@@ -108,7 +108,15 @@ export function HabitForm() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="default" className="mt-4 flex items-center gap-2 w-full hover:scale-110 active:scale-95 transition-all duration-200 "><PlusIcon/>Create New Habit</Button>
+          <Button 
+            variant="default" 
+            className="flex items-center justify-center group-hover:justify-start gap-3 w-full rounded-lg px-3 py-2 text-sm font-medium transition-all overflow-hidden whitespace-nowrap"
+          >
+            <PlusIcon className="shrink-0 h-5 w-5" />
+            <span className="hidden group-hover:inline transition-opacity duration-300">
+              Create New Habit
+            </span>
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -5,10 +5,7 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 ## Todo
 
 - [ ]- completed dashboard interactions with habit.
-    - [X]- hello too big so change to to good morning or good afternoon or good evening in page.tsx of home
-    - [X]- also things are very slow, loading is not instant.
-    - [ ]- dialog box for creating habit not closing after successfull creation.
-    - [ ]- add sidebar to slide in and slide out
+    - [X]- add sidebar to slide in and slide out
   - [ ]- implement timer for habit : set a time it will take to complete the habit and show a timer for it and then click on done.
     - [ ]- add features for habit : like as mentioned a timer also a more button or link to navigate to /profile/habit/:id and give a complete analysis like last 90 days actions and other analytics like a daily log of what got achived (this can also be a new feature for habit)
     - [ ]- implement habit update and delete
