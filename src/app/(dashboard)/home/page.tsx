@@ -52,7 +52,7 @@ if(userHabitsError?.data?.code === "UNAUTHORIZED"){
             <h1 className="text-2xl font-bold text-foreground">
               {getGreeting()}!
             </h1>
-            <p className="text-xl font-semibold text-muted-foreground">{properTodaysDate}</p>
+            <p className="text-2xl font-semibold text-muted-foreground">{properTodaysDate}</p>
           </div>
         </div>
         <HabitVisualizer/>
