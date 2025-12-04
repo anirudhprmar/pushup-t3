@@ -81,8 +81,7 @@ export function HabitForm() {
         const createHabit = await create.mutateAsync({
             name:data.name,
             goal:data.goal,
-            description:data.description ?? "",
-            userId:"Wxk9BvCUI2LJ29BgDDoawezMdwfMrK9P"
+            description:data.description ?? ""
         })
     
         if (createHabit) {

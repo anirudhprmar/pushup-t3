@@ -4,15 +4,28 @@ import { api } from "~/lib/api";
 import HabitVisualizer from "./_components/HabitVisualizer";
 import dateAndactualMonth from "~/lib/day&months";
 import { HabitCard } from "~/components/HabitCard";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export default function Home() {
  
+const router = useRouter()
 
+const {data:userInfo,isLoading:loadingUserInfo,error:userInfoError} = api.user.me.useQuery()
 
-const {data:userInfo} = api.user.me.useQuery({userId:"Wxk9BvCUI2LJ29BgDDoawezMdwfMrK9P"})
+if(userInfoError?.data?.code === "UNAUTHORIZED"){
+  return router.push("/login")
+}
 
-const {data:userHabits,isLoading:loadingUserHabits} = api.habit.habits.useQuery({userId:"Wxk9BvCUI2LJ29BgDDoawezMdwfMrK9P"})
+const {data:userHabits,isLoading:loadingUserHabits,error:userHabitsError} = api.habit.habits.useQuery()
 
+if(loadingUserInfo || loadingUserHabits){
+  return <p className="animate-spin text-2xl"><Loader2/></p>
+}
+
+if(userHabitsError?.data?.code === "UNAUTHORIZED"){
+  return router.push("/login")
+}
 
  const todaysDate = new Date().toLocaleDateString().split("T")[0] ?? ""
  const properTodaysDate = dateAndactualMonth(todaysDate);
