@@ -6,9 +6,9 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 - [ ]- completed dashboard interactions with habit.
     - [X]- add features for habit
-    - [ ]- implement habit features
+    - [X]- implement habit features
     - [ ]- implement habit update and delete
-    - [ ]- improve habit card
+    - [X]- improve habit card
     - [ ]- fix user profile button style it good, also on click it add more/ remove options
     - [ ]- optimize code to server side render, reduce client side code.
 
