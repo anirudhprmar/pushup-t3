@@ -7,6 +7,10 @@ import { HabitCard } from "~/components/HabitCard";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { calculateProgress } from "~/lib/habitUtils";
+import type { habit } from "~/server/db/schema";
+
+// Type for habit from database
+type Habit = typeof habit.$inferSelect;
 
 // Helper function to get greeting based on time of day
 function getGreeting(): string {
@@ -28,21 +32,30 @@ function HabitCardWithProgress({
   habit, 
   inProgress 
 }: { 
-  habit: any; 
+  habit: Habit; 
   inProgress: boolean;
 }) {
   const { data: log } = api.habit.getHabitProgress.useQuery({ habitId: habit.id });
   
   const getProgress = () => {
     if (!log) return 0;
-    if (log.completed) return 100;
     
-    // For numeric/timer habits, calculate based on actual vs target
-    if ((habit.habitType === "numeric" || habit.habitType === "timer") && habit.targetValue && log.actualValue) {
-      return calculateProgress(log.actualValue, habit.targetValue);
+    // For numeric/timer habits, always calculate based on actual vs target
+    if ((habit.habitType === "numeric" || habit.habitType === "timer") && habit.targetValue) {
+      // If there's an actual value, calculate percentage
+      if (log.actualValue !== null && log.actualValue !== undefined) {
+        return calculateProgress(log.actualValue, habit.targetValue);
+      }
+      // If completed but no actual value recorded, assume target was met
+      if (log.completed) {
+        return 100;
+      }
+      // In progress but no value yet
+      return 0;
     }
     
-    // For in-progress boolean habits, show 50%
+    // For boolean habits: 0% (not started), 50% (in progress), 100% (completed)
+    if (log.completed) return 100;
     if (log.startedAt && !log.completed) return 50;
     
     return 0;

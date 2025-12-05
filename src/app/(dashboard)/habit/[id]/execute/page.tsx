@@ -50,12 +50,17 @@ export default function HabitExecutePage() {
   const currentHabit = habit?.find((h) => h.id === habitId)
   const CategoryIcon = currentHabit?.category ? getCategoryIcon(currentHabit.category) : null
 
+  // Track if we've already started the habit to prevent infinite loop
+  const hasStartedRef = React.useRef(false)
+
   // Start habit on mount if not already started
   React.useEffect(() => {
-    if (!progress && habitId) {
+    if (!progress && habitId && !hasStartedRef.current && !startHabit.isPending) {
+      hasStartedRef.current = true
       startHabit.mutate({ habitId })
     }
-  }, [habitId, progress, startHabit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [habitId, progress]) // Removed startHabit from dependencies to prevent infinite loop
 
   const handlePomodoroChoice = (useIt: boolean) => {
     setUsePomodoro(useIt)

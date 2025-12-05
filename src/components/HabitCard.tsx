@@ -56,13 +56,24 @@ export function HabitCard({
     router.push(`/habit/${id}/execute`);
   };
 
+  const handleCardClick = () => {
+    router.push(`/habit/${id}/analysis`);
+  };
+
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click when clicking button
+    handleStartOrContinue();
+  };
+
   return (
     <div
+      onClick={handleCardClick}
       className="group relative overflow-hidden rounded-xl backdrop-blur-md bg-white/40 dark:bg-black/20 
                  border-2 transition-all duration-300 ease-out
                  hover:bg-white/50 dark:hover:bg-black/30 
                  hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-black/30
-                 hover:scale-[1.02] hover:-translate-y-0.5"
+                 hover:scale-[1.02] hover:-translate-y-0.5
+                 cursor-pointer"
       style={{
         borderColor: inProgress ? (color ?? "#3b82f6") : `${color ?? "#3b82f6"}40`,
         boxShadow: inProgress ? `0 0 20px ${color ?? "#3b82f6"}40` : undefined,
@@ -201,7 +212,7 @@ export function HabitCard({
             </Button>
           ) : (
             <Button
-              onClick={handleStartOrContinue}
+              onClick={handleButtonClick}
               size="sm"
               variant="outline"
               className="flex-1 rounded-lg font-medium text-sm transition-all duration-200 backdrop-blur-sm border-2"
