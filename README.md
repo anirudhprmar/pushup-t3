@@ -4,8 +4,6 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 ## Todo
 
-
-- [X]- fix user profile button style it good, also on click it add more/ remove options
 - [ ]- optimize code to server side render, reduce client side code.
 - [ ]- then work on leaderboard
 - [ ]- create different routes (leaderboard,profile,accountability)

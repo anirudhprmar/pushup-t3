@@ -33,7 +33,8 @@ export default function RootLayout({
     <html lang="en" className={`${lato.className} ${crimsonPro.className}`} suppressHydrationWarning>
       <body>
         <Providers>
-        <TRPCReactProvider>{children}
+        <TRPCReactProvider>
+            {children}
           <Toaster/>
           <Analytics />
         </TRPCReactProvider>
