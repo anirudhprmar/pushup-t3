@@ -16,6 +16,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { api } from "~/lib/api";
+import { Button } from "./ui/button";
+import { useTheme } from "next-themes";
+
 
 export default function UserProfile({ mini, showName = false }: { mini?: boolean; showName?: boolean }) {
   const router = useRouter();
@@ -26,6 +29,8 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
     staleTime: 5000, // Consider data fresh for 5 seconds (matches session cache)
     refetchOnWindowFocus: false, // Prevent unnecessary refetches
   });
+
+  const { setTheme, theme } = useTheme();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -92,20 +97,34 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
           <Link href="/settings?tab=profile">
             <DropdownMenuItem>
               Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
             </DropdownMenuItem>
           </Link>
-          <Link href="/settings?tab=billing">
-            <DropdownMenuItem>
-              Billing
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </Link>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Theme</DropdownMenuLabel>
+          <div className="flex gap-2 px-2 pb-2 ">
+            <Button
+              size="sm"
+              variant={theme === "light" ? "default" : "outline"}
+              onClick={() => setTheme("light")}
+              className="w-fit"
+            >
+              Light
+            </Button>
+            <Button
+              size="sm"
+              variant={theme === "dark" ? "default" : "outline"}
+              onClick={() => setTheme("dark")}
+              className="w-fit"
+            >
+              Dark
+            </Button>
+          </div>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
