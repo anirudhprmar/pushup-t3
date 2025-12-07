@@ -1,6 +1,14 @@
 "use client";
 
-import { DropdownMenu } from "frosted-ui";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { authClient } from "~/lib/auth-client";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -49,8 +57,8 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
   }
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <div
           className={`flex gap-3 justify-start items-center w-full rounded hover:cursor-pointer overflow-hidden whitespace-nowrap ${mini ? "px-2 py-2" : "px-4 pt-2 pb-3"}`}
         >
@@ -80,24 +88,24 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
             </div>
           )}
         </div>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-56">
-        <DropdownMenu.Label>My Account</DropdownMenu.Label>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Group>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
           <Link href="/settings?tab=profile">
-            <DropdownMenu.Item>
+            <DropdownMenuItem>
               Profile
               {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
-            </DropdownMenu.Item>
+            </DropdownMenuItem>
           </Link>
           <Link href="/settings?tab=billing">
-            <DropdownMenu.Item>
+            <DropdownMenuItem>
               Billing
-            </DropdownMenu.Item>
+            </DropdownMenuItem>
           </Link>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Label>Theme</DropdownMenu.Label>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Theme</DropdownMenuLabel>
           <div className="flex gap-2 px-2 pb-2 ">
             <Button
               size="sm"
@@ -116,13 +124,13 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
               Dark
             </Button>
           </div>
-        </DropdownMenu.Group>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item onClick={handleSignOut}>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleSignOut}>
           Log out
           {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
-        </DropdownMenu.Item>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

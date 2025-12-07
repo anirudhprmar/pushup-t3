@@ -1,7 +1,7 @@
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { user } from "~/server/db/schema";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { user, userStats } from "~/server/db/schema";
 
 export const userRouter = createTRPCRouter({
   me: protectedProcedure
@@ -12,5 +12,24 @@ export const userRouter = createTRPCRouter({
     }
 
     return userInfo;
+    }),
+
+  getLeaderboard: publicProcedure
+    .query(async ({ ctx }) => {
+      const leaderboard = await ctx.db
+        .select({
+          id: user.id,
+          name: user.name,
+          image: user.image,
+          currentStreak: userStats.currentStreak,
+          longestStreak: userStats.longestStreak,
+          totalConsistentDays: userStats.totalConsistentDays,
+        })
+        .from(user)
+        .innerJoin(userStats, eq(user.id, userStats.userId))
+        .orderBy(desc(userStats.totalConsistentDays))
+        .limit(50);
+
+      return leaderboard;
     }),
 });

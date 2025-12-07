@@ -5,10 +5,10 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 ## Todo
 
 - [ ]- optimize code to server side render, reduce client side code.
-- [ ]- then work on leaderboard
-- [ ]- create different routes (leaderboard,profile,accountability)
-- [ ]- implement redis rate limiting and caching.
+- [X]- then work on leaderboard
+- [ ]- work on profile
 - [ ]- landing page redesign
+- [ ]- implement redis rate limiting and caching.
 - [ ]- re-deploy to vercel with all the envs
 - [ ]- ui/ux of the app
 - [ ]- implement onboarding flow
