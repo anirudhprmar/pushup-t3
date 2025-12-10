@@ -392,5 +392,60 @@ export const habitRouter = createTRPCRouter({
 
       return { completedDayNumbers };
     }),
+    getYearlyCompletionDaysDetailed: protectedProcedure
+      .query(async ({ ctx }) => {
+        // Get all user habits
+        const userHabits = await ctx.db
+          .select()
+          .from(habit)
+          .where(eq(habit.userId, ctx.userId));
+        
+        const totalHabits = userHabits.length;
+        
+        if (totalHabits === 0) {
+          return { completedDayNumbersDetailed: {} };
+        }
+        
+        // Get all completed logs
+        const completedLogs = await ctx.db
+          .select()
+          .from(habitLog)
+          .where(
+            and(
+              eq(habitLog.userId, ctx.userId),
+              eq(habitLog.completed, true)
+            )
+          );
+        
+        // Group by date and count completed habits per day
+        const completionsByDate = new Map<string, number>();
+        for (const log of completedLogs) {
+          const current = completionsByDate.get(log.date) ?? 0;
+          completionsByDate.set(log.date, current + 1);
+        }
+        
+        const completedDayNumbersDetailed: Record<string, boolean> = {};
+
+        // This prevents the system from unfairly marking a past day as "Failed" just because you created a new habit today.
+        for (const [date, count] of completionsByDate.entries()) {
+          const activeHabitsOnDate = userHabits.filter(h => {
+            const habitCreatedDate = h.createdAt.toISOString().split('T')[0];
+            //checking if the habit was created before the today's date
+            return habitCreatedDate! <= date;
+          }).length;
+
+          if (count >= activeHabitsOnDate) {
+            completedDayNumbersDetailed[date] = true;
+          } else {
+             completedDayNumbersDetailed[date] = false;
+          }
+        }
+
+        const today = new Date().toISOString().split('T')[0]!;
+        completedDayNumbersDetailed[today] ??= false;
+        
+        return { completedDayNumbersDetailed };
+      }),
+        
 });
 

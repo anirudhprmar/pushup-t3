@@ -7,45 +7,45 @@ let actualMonth = ""
 
 switch (month) {
     case 1:
-        actualMonth = "Jan";
+        actualMonth = "January";
         break;
 
     case 2:
-        actualMonth = "Feb";
+        actualMonth = "February";
         break;
 
     case 3:
-        actualMonth = "Mar";
+        actualMonth = "March";
         break;
 
     case 4:
-        actualMonth = "Apr";
+        actualMonth = "April";
         break;
 
     case 5:
         actualMonth = "May";
         break;              
     case 6:
-        actualMonth = "Jun";
+        actualMonth = "June";
         break;
         
     case 7:
-        actualMonth = "Jul";
+        actualMonth = "July";
         break;
     case 8:
-        actualMonth = "Aug";
+        actualMonth = "August";
         break;
     case 9:
-        actualMonth = "Sep";
+        actualMonth = "September";
         break;
     case 10:
-        actualMonth = "Oct";
+        actualMonth = "October";
         break;
     case 11:
-        actualMonth = "Nov";
+        actualMonth = "November";
         break;
     case 12:
-        actualMonth = "Dec";
+        actualMonth = "December";
         break;
 
     default:

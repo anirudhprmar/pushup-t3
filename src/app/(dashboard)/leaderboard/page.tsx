@@ -27,7 +27,7 @@ export default function LeaderboardPage() {
     <div className="min-h-screen bg-background text-foreground p-6 md:p-12 space-y-12">
       {/* Header Section */}
       <div className="text-center space-y-4 mx-auto">
-        <h1 className="text-6xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent pb-2">
+        <h1 className="text-6xl md:text-6xl font-bold tracking-tight bg-linear-to-r from-primary to-blue-500 bg-clip-text text-transparent pb-2">
           Community Leaderboard
         </h1>
         <p className="text-muted-foreground text-lg">

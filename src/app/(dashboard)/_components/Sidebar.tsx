@@ -60,7 +60,7 @@ export default function DashboardSideBar() {
             href="/"
           >
             <Image
-              src="/logo.png"
+              src="https://163jz9wo57.ufs.sh/f/LDDo8gC5wt4WHG96CAWCE8jO4lDAoLUSPrMFKBZibv3dhGsw"
               alt="PushUp Logo"
               width={32}
               height={32}

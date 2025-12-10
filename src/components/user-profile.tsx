@@ -93,7 +93,7 @@ export default function UserProfile({ mini, showName = false }: { mini?: boolean
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/settings?tab=profile">
+          <Link href="/profile">
             <DropdownMenuItem>
               Profile
               {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
