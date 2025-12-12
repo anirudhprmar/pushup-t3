@@ -37,16 +37,16 @@ export function UserProgressCalender() {
   const {successfulDates, failedDates} = getDates(data?.completedDayNumbersDetailed);
   return (
    <>
-    <div className="rounded-xl text-white p-2 shadow-2xl w-full max-w-3xl ">
+    <div className="w-full max-w-3xl ">
       <Calendar
         mode="single"
-        className="w-full p-0"
+        className="w-fit p-0"
         classNames={{
           months: "flex flex-col w-full",
-          month: "space-y-4 w-full flex flex-col items-center",
+          month: "space-y-4 w-full flex flex-col items-center p-5",
           caption: "flex justify-between pt-1 relative items-center px-2 w-full max-w-md mx-auto mb-4",
           caption_label: "text-2xl font-light text-white",
-          nav: "space-x-1 flex items-center gap-2",
+          nav: "space-x-1 absolute right-0 md:right-10 p-5",
           nav_button: "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100 text-white hover:bg-gray-800 rounded-full transition-all ",
           nav_button_previous: "absolute right-10",
           nav_button_next: "absolute right-0",
@@ -69,7 +69,7 @@ export function UserProgressCalender() {
         }}
         modifiersClassNames={{
            hasEvent: "bg-blue-600 text-white border-blue-600", 
-          failedEvent: "bg-red-600/20 text-red-500 border-red-900/50" 
+          failedEvent: "bg-red-600/20 text-red-500 border-red-600/50" 
         }}
       />
     </div>

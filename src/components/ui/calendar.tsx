@@ -31,7 +31,7 @@ function Calendar({
       className={cn(
         "bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
-        String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+        String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180 relative rounded-2xl overflow-hidden`,
         className
       )}
       captionLayout={captionLayout}
@@ -90,7 +90,7 @@ function Calendar({
           "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] select-none",
           defaultClassNames.weekday
         ),
-        week: cn("flex w-full mt-2", defaultClassNames.week),
+        week: cn("flex w-full gap-0 md:gap-3 mt-2", defaultClassNames.week),
         week_number_header: cn(
           "select-none w-(--cell-size)",
           defaultClassNames.week_number_header

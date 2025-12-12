@@ -29,12 +29,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
-  if (!sessionCookie && pathname.startsWith("/home")) {
+  const protectedRoutes = ["/home", "/profile", "/leaderboard", "/accountability", "/notifications"];
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+
+  if (!sessionCookie && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/login","/home","/leaderboard","/accountability","/notifications"] 
+  matcher: ["/login", "/home", "/profile", "/leaderboard", "/accountability", "/notifications"] 
 };

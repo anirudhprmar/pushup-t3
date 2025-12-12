@@ -178,7 +178,40 @@ export const habitRouter = createTRPCRouter({
 
       return log ?? null;
     }),
+  getHabitsNotCompletedToday: protectedProcedure
+    .query(async ({ ctx }) => {
+      const today = new Date().toISOString().split('T')[0]!;
 
+      // 1. Get all active habits for the user
+      const allHabits = await ctx.db
+        .select()
+        .from(habit)
+        .where(eq(habit.userId, ctx.userId));
+
+      if (allHabits.length === 0) {
+        return [];
+      }
+
+      // 2. Get IDs of habits that are COMPLETED today
+      const completedLogs = await ctx.db
+        .select({ habitId: habitLog.habitId })
+        .from(habitLog)
+        .where(
+          and(
+            eq(habitLog.userId, ctx.userId),
+            eq(habitLog.date, today),
+            eq(habitLog.completed, true)
+          )
+        );
+
+      const completedHabitIds = new Set(completedLogs.map(log => log.habitId));
+
+      // 3. Return habits that are NOT in the completed set
+      // This includes:
+      // - Habits with no log for today (not started)
+      // - Habits with a log for today but completed = false (in progress)
+      return allHabits.filter(h => !completedHabitIds.has(h.id));
+    }),
   getTodayInProgressHabits: protectedProcedure
     .query(async ({ ctx }) => {
       const today = new Date().toISOString().split('T')[0]!;
@@ -446,6 +479,75 @@ export const habitRouter = createTRPCRouter({
         
         return { completedDayNumbersDetailed };
       }),
+
+  getRecentHabitNotes: protectedProcedure
+    .query(async ({ ctx }) => {
+      const notes = await ctx.db
+        .select({
+          id: habitLog.id,
+          date: habitLog.date,
+          note: habitLog.notes,
+          habitName: habit.name,
+          habitColor: habit.color,
+        })
+        .from(habitLog)
+        .innerJoin(habit, eq(habitLog.habitId, habit.id))
+        .where(
+          and(
+            eq(habitLog.userId, ctx.userId),
+            // We want notes that are not null and not empty
+            // Since we can't easily use sql`length(notes) > 0` with all drivers in a unified way without raw sql,
+            // and we are filtering in JS anyway for safety, we'll just fetch non-nulls if possible or filter all.
+            // For now, let's just fetch and filter in JS to be safe and simple.
+          )
+        )
+        .orderBy(habitLog.date); 
+
+      // Filter in memory to ensure we only get actual notes and sort descending
+      return notes
+        .filter(n => n.note && n.note.trim().length > 0)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 10);
+    }),
+
+  getAllHabitsWithStats: protectedProcedure
+    .query(async ({ ctx }) => {
+      const habits = await ctx.db
+        .select()
+        .from(habit)
+        .where(eq(habit.userId, ctx.userId));
+
+      const today = new Date();
+      const thirtyDaysAgo = new Date(today);
+      thirtyDaysAgo.setDate(today.getDate() - 30);
+
+      const stats = await Promise.all(habits.map(async (h) => {
+        const logs = await ctx.db
+          .select()
+          .from(habitLog)
+          .where(
+            and(
+              eq(habitLog.habitId, h.id),
+              eq(habitLog.userId, ctx.userId)
+            )
+          );
+        
+        const recentLogs = logs.filter(log => {
+           const d = new Date(log.date);
+           return d >= thirtyDaysAgo && d <= today;
+        });
+
+        const completedCount = recentLogs.filter(l => l.completed).length;
+        const completionRate = Math.round((completedCount / 30) * 100);
+
+        return {
+          ...h,
+          completionRate
+        };
+      }));
+
+      return stats;
+    }),
         
 });
 

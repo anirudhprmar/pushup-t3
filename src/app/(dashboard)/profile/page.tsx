@@ -1,12 +1,22 @@
 import { api, HydrateClient } from "~/trpc/server";
-import { UserHabitProgressChart } from "./_components/UserProgressChart";
 import { UserProgressCalender } from "./_components/UserProgressCalender";
-import { UserRankingGlobe } from "./_components/UserRankingGlobe";
+import { UserConsistencyTracker } from "./_components/UserConsistencyTracker";
+import TodaysProgress from "./_components/TodaysProgress";
+
+import { ReviewNotes } from "./_components/ReviewNotes";
+import { HabitsProgressList } from "./_components/HabitsProgressList";
+
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   // 1. Fetch user data directly on the server
   // This uses the 'me' procedure we defined in user.router.ts
-  const user = await api.user.me();
+  let user;
+  try {
+    user = await api.user.me();
+  } catch (error) {
+    redirect("/login");
+  }
 
   // 2. (Optional) Prefetch data for client components if needed
   // void api.user.getStats.prefetch(); 
@@ -17,20 +27,21 @@ export default async function Page() {
         <div className="flex items-center gap-2">
             <h1 className="font-bold text-3xl">Hi!, {user.name.split(" ")[0]}</h1>
         </div>
-        <div className="flex flex-wrap gap-4 justify-around items-center py-10">
-            <UserProgressCalender />
-        </div>
+        <div className="mt-8 flex flex-col md:flex-row gap-8 items-center justify-center w-full">
+        <UserProgressCalender />
+        <UserConsistencyTracker />
+      </div>
 
-        <div className="flex flex-wrap gap-4 justify-around items-center">
-            <div>
-            {/* Today's progress */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full ">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              {/* Today's progress */}
+              <TodaysProgress/>
+                <ReviewNotes/>
             </div>
 
-            {/* small circle with my global ranking */}
-            {/* <UserRankingGlobe/> */}
-
-            <div>
-                {/* my habits */}
+            <div className="flex flex-col gap-4 ">
+                {/* my habits and progress */}
+                <HabitsProgressList />
             </div>
         </div>
       </div>
