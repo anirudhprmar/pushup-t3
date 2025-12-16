@@ -95,7 +95,7 @@ export default function HabitExecutePage() {
     setShowJournal(false)
     toast.success("Habit completed! Great work! 🎉")
     setTimeout(() => {
-      router.push("/home")
+      router.push("/profile")
     }, 1000)
   }
 
@@ -103,7 +103,7 @@ export default function HabitExecutePage() {
     setShowJournal(false)
     toast.success("Habit completed! Great work! 🎉")
     setTimeout(() => {
-      router.push("/home")
+      router.push("/profile")
     }, 1000)
   }
 
@@ -120,7 +120,7 @@ export default function HabitExecutePage() {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Habit not found</h2>
-          <Button onClick={() => router.push("/home")}>
+          <Button onClick={() => router.push("/profile")}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
@@ -167,7 +167,7 @@ export default function HabitExecutePage() {
           <div className="mb-8">
             <Button
               variant="ghost"
-              onClick={() => router.push("/home")}
+              onClick={() => router.push("/profile")}
               className="mb-4"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -258,7 +258,7 @@ export default function HabitExecutePage() {
               <p className="text-muted-foreground mb-4">
                 Great job on completing {currentHabit.name} today!
               </p>
-              <Button onClick={() => router.push("/home")}>
+              <Button onClick={() => router.push("/profile")}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>

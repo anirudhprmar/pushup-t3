@@ -26,7 +26,7 @@ import UserProfile from "~/components/user-profile";
 const navItems = [
   {
     label: "Today",
-    href: "/home",
+    href: "/profile",
     icon: HomeIcon,
   },
   {

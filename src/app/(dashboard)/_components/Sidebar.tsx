@@ -3,12 +3,17 @@
 import UserProfile from "~/components/user-profile";
 import clsx from "clsx";
 import {
-  HomeIcon,
   type LucideIcon,
   BarChart,
   Settings,
   Bell,
   BicepsFlexed,
+  UserIcon,
+  ListTodo,
+  TargetIcon,
+  TreeDeciduousIcon,
+  BookIcon,
+  Flame,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -24,9 +29,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Overview",
-    href: "/home",
-    icon: HomeIcon,
+    label: "Profile",
+    href: "/profile",
+    icon: UserIcon,
   },
   {
     label: "Leaderboard",
@@ -39,9 +44,24 @@ const navItems: NavItem[] = [
     icon: BicepsFlexed,
   },
   {
-    label: "Notifications",
-    href: "/notifications",
-    icon: Bell,
+    label: "Tasks",
+    href: "/tasks",
+    icon: ListTodo,
+  },
+   {
+    label: "Habits",
+    href: "/habits",
+    icon: TreeDeciduousIcon,
+  },
+   {
+    label: "Weekly Goals",
+    href: "/weekly-goals",
+    icon: TargetIcon,
+  },
+   {
+    label: "Goals",
+    href: "/goals",
+    icon: Flame,
   },
 ];
 
@@ -113,12 +133,27 @@ export default function DashboardSideBar() {
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
+                <Bell className="h-5 w-5 shrink-0" />
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Notifications
+                </span>
+              </div>
+              <div
+                onClick={() => router.push("/settings")}
+                className={clsx(
+                  "flex items-center group-hover:justify-start w-full gap-3 rounded-lg px-2.5 group-hover:px-3 py-2 text-sm font-medium transition-all hover:cursor-pointer whitespace-nowrap overflow-hidden",
+                  pathname === "/settings"
+                    ? "bg-primary/10 text-primary hover:bg-primary/20"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
                 <Settings className="h-5 w-5 shrink-0" />
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Settings
                 </span>
               </div>
             </div>
+            
             <div className="overflow-hidden">
               <UserProfile/>
             </div>

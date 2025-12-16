@@ -38,7 +38,7 @@ export default function HabitAnalysisPage() {
   
   const deleteHabitMutation = api.habit.deleteHabit.useMutation({
     onSuccess: () => {
-      router.push("/home");
+      router.push("/profile");
     },
     onError: (error) => {
       console.error("Failed to delete habit:", error);
@@ -201,7 +201,7 @@ export default function HabitAnalysisPage() {
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <Button
               variant="ghost"
-              onClick={() => router.push("/home")}
+              onClick={() => router.push("/profile")}
               className="-ml-2"
               size="sm"
             >
