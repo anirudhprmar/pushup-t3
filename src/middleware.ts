@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/profile", request.url));
   }
 
-  const protectedRoutes = ["/profile", "/profile", "/leaderboard", "/accountability", "/notifications"];
+  const protectedRoutes = ["/profile", "/habits", "/weekly-goals", "/goals", "/leaderboard", "/notifications"];
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
 
   if (!sessionCookie && isProtectedRoute) {
@@ -39,5 +39,5 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/login", "/profile", "/profile", "/leaderboard", "/accountability", "/notifications"] 
+  matcher: ["/login", "/profile", "/habits", "/weekly-goals", "/goals", "/leaderboard", "/notifications"] 
 };

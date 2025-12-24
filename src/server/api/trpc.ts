@@ -26,9 +26,18 @@ import { db } from "~/server/db";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = await auth.api.getSession({
-    headers:await headers()
-  })
+  let session = null;
+  try {
+    session = await Promise.race([
+      auth.api.getSession({ headers: await headers() }),
+      new Promise<null>((_, reject) => 
+        setTimeout(() => reject(new Error('Session timeout')), 2000)
+      )
+    ]);
+  } catch (error) {
+    console.warn('Session timeout:', error);
+  }
+  
   return {
     db,
     session,
@@ -101,39 +110,6 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
-/**
- * Cache session verification for 5 seconds per user
- */
-
-const sessionCache = new Map<string,{session:Awaited<ReturnType<typeof auth.api.getSession>>,expires:number}>();
-
-const cachedSessionMiddleware = t.middleware(async ({ctx,next}) => {
-  const sessionKey = ctx.session?.user?.id;
-  
-  if(sessionKey){
-    const cached = sessionCache.get(sessionKey);
-    if(cached && cached.expires > Date.now()){
-      return next({
-        ctx:{
-          ...ctx,
-          session:cached.session
-        }
-      })
-    }
-  }
-
-  const result = await next();
-  
-  if(sessionKey && ctx.session){
-    sessionCache.set(sessionKey,{
-      session:ctx.session,
-      expires:Date.now()+ 5000
-    })
-  }
-  
-  return result;
-})
-
 // TRPC rate limit middleware
 
 // const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
@@ -161,7 +137,6 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 
 export const protectedProcedure = t.procedure
-  .use(cachedSessionMiddleware)
   .use(timingMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.user?.id) {
@@ -169,12 +144,8 @@ export const protectedProcedure = t.procedure
     }
     return next({
       ctx: {
-        session: { 
-          ...ctx.session, 
-          user: ctx.session.user
-        },
-        userId:ctx.session.user.id
+        session: ctx.session, 
+        userId: ctx.session.user.id
       },
     });
   });
-

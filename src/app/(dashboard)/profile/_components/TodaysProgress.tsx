@@ -2,7 +2,7 @@
 import { api } from "~/lib/api"
 
 export default function TodaysProgress() {
-    const {data,isLoading} = api.habits.getHabitsNotCompletedToday.useQuery();
+    const {data,isLoading} = api.habits.getHabitsNotCompleted.useQuery();
   return (
     <div className="bg-foreground/5 text-primary p-10 rounded-xl w-full">
         <div className="flex flex-col items-start justify-center">

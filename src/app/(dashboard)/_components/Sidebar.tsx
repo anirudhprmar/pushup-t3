@@ -38,11 +38,11 @@ const navItems: NavItem[] = [
     href: "/leaderboard",
     icon: BarChart,
   },
-  {
-    label: "Accountablity",
-    href: "/accountability",
-    icon: BicepsFlexed,
-  },
+  // {
+  //   label: "Accountablity",
+  //   href: "/accountability",
+  //   icon: BicepsFlexed,
+  // },
   {
     label: "Tasks",
     href: "/tasks",
@@ -73,30 +73,10 @@ export default function DashboardSideBar() {
     <div className="min-[1024px]:block hidden group w-18 hover:w-64 border-r h-full bg-background transition-all duration-300 ease-in-out">
       <div className="flex h-full flex-col">
         {/* Logo Section */}
-        <div className="flex h-[3.45rem] items-center border-b px-4 py-8 overflow-hidden">
-          <Link
-            prefetch={true}
-            className="flex items-center font-semibold hover:cursor-pointer whitespace-nowrap"
-            href="/"
-          >
-            <Image
-              src="https://163jz9wo57.ufs.sh/f/LDDo8gC5wt4WHG96CAWCE8jO4lDAoLUSPrMFKBZibv3dhGsw"
-              alt="PushUp Logo"
-              width={32}
-              height={32}
-              className="rounded-md w-10 h-10 drop-shadow-2xl shrink-0"
-            />
-            <span className="heading-serif italic text-2xl ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              PushUp
-            </span>
-          </Link>
-        </div>
+        {/*  */}
 
 
-        {/* Habit Form Button - Adapts to sidebar width */}
-        <div className="w-full px-4 mt-4 transition-all duration-300">
-          <HabitForm />
-        </div>
+     
 
 
         <nav className="flex flex-col h-full justify-between items-start w-full space-y-1">

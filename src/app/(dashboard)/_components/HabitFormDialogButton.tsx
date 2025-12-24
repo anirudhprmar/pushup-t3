@@ -27,17 +27,12 @@ const formSchema = z.object({
     .string()
     .min(3, "Habit name must be at least 3 characters.")
     .max(50, "Habit name must be at most 50 characters."),
-  goal: z
-    .string()
-    .min(5, "Goal must be at least 5 characters."),
+  goalId: z.uuid().optional(),
   description: z
     .string()
     .optional(),
   category: z.string().optional(),
   color: z.string().optional(),
-  habitType: z.enum(["boolean", "numeric", "timer"]).default("boolean"),
-  targetValue: z.number().optional(),
-  targetUnit: z.string().optional(),
 })
 
 import { PlusIcon } from "lucide-react"
@@ -59,17 +54,14 @@ export function HabitForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      goal: "",
+      goalId:undefined,
       description: "",
       category: undefined,
       color: "#3b82f6",
-      habitType: "boolean",
-      targetValue: undefined,
-      targetUnit: "",
     },
   })
 
-  const habitType = form.watch("habitType")
+
   const category = form.watch("category")
 
   // Update color when category changes
@@ -80,9 +72,9 @@ export function HabitForm() {
   }, [category, form])
 
   const trpc = api.useUtils()
-  const create = api.habits.create.useMutation({
+  const create = api.habits.createHabit.useMutation({
     onSuccess: async () => {
-      await trpc.habit.invalidate()
+      await trpc.habits.invalidate()
     }
   })
 
@@ -90,13 +82,10 @@ export function HabitForm() {
     try {
       const createHabit = await create.mutateAsync({
         name: data.name,
-        goal: data.goal,
+        goalId: data.goalId,
         description: data.description ?? "",
         category: data.category,
-        color: data.color,
-        habitType: data.habitType,
-        targetValue: data.targetValue,
-        targetUnit: data.targetUnit,
+        color: data.color
       })
 
       if (createHabit) {
@@ -166,13 +155,13 @@ export function HabitForm() {
               />
 
               {/* Goal */}
-              <Controller
-                name="goal"
+              {/* <Controller
+                name="goalId"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>
-                      Goal <span className="text-destructive">*</span>
+                      GoalId <span className="text-destructive">*</span>
                     </FieldLabel>
                     <Input
                       {...field}
@@ -185,7 +174,8 @@ export function HabitForm() {
                     )}
                   </Field>
                 )}
-              />
+                /> */}
+                {/* give a list of all goals and user will choose and we will send that goal's id to this */}
 
               {/* Description */}
               <Controller
@@ -253,95 +243,6 @@ export function HabitForm() {
                 )}
               />
 
-              {/* Habit Type */}
-              <Controller
-                name="habitType"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Habit Type</FieldLabel>
-                    <div className="flex gap-2">
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          {...field}
-                          value="boolean"
-                          checked={field.value === "boolean"}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">Simple</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          {...field}
-                          value="numeric"
-                          checked={field.value === "numeric"}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">Numeric</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          {...field}
-                          value="timer"
-                          checked={field.value === "timer"}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">Timer</span>
-                      </label>
-                    </div>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
-
-              {/* Target Value (conditional) */}
-              {(habitType === "numeric" || habitType === "timer") && (
-                <div className="grid grid-cols-2 gap-4">
-                  <Controller
-                    name="targetValue"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel>Target Value</FieldLabel>
-                        <Input
-                          {...field}
-                          type="number"
-                          value={field.value ?? ""}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                          placeholder="20"
-                          aria-invalid={fieldState.invalid}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-
-                  <Controller
-                    name="targetUnit"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel>Unit</FieldLabel>
-                        <Input
-                          {...field}
-                          placeholder={habitType === "timer" ? "minutes" : "pages, reps..."}
-                          aria-invalid={fieldState.invalid}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                </div>
-              )}
             </FieldGroup>
           </form>
           <DialogFooter>
