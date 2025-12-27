@@ -8,7 +8,12 @@ export const habitRouter = createTRPCRouter({
 
   getHabits: protectedProcedure
     .query(async ({ ctx }) => {
-    const data = await ctx.db.select().from(habits).where(eq(habits.userId,ctx.userId));
+        const today = new Date().toISOString().split('T')[0]!;
+
+    const data = await ctx.db.select().from(habits).where(eq(habits.userId,ctx.userId)).leftJoin(habitLogs, and(
+      eq(habitLogs.habitId, habits.id),
+      eq(habitLogs.date, today)
+    ))
     if(!data){
       throw new Error("No habits found")
     }
@@ -27,14 +32,21 @@ export const habitRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { name,goalId, description, category, color } = input
 
-      await ctx.db.insert(habits).values({
+      const [newHabit] = await ctx.db.insert(habits).values({
         name,
         goalId,
         description,
         category,
         color,
         userId:ctx.userId
-      });
+      }).returning({id:habits.id})
+
+      if (!newHabit) throw new Error("Failed to create habit");
+
+      await ctx.db.insert(habitLogs).values({
+        habitId:newHabit.id,
+        date:new Date().toDateString().split('T')[0]!
+      })
 
       return { success: true };
     }),
@@ -76,28 +88,14 @@ export const habitRouter = createTRPCRouter({
     .mutation(async({ctx,input})=>{
       const today = new Date().toDateString().split('T')[0]!;
 
-       const [log] = await ctx.db
-        .select()
-        .from(habitLogs)
-        .where(
-          and(
-            eq(habitLogs.habitId, input.habitId),
-            eq(habitLogs.date, today)
-          )
-        )
-        .limit(1);
-
-      if (!log) {
-        throw new Error("No active habit session found");
-      }
-
       await ctx.db
       .update(habitLogs)
       .set({
+        date:today,
         completed:true,
         notes:input.notes
       })
-      .where(eq(habitLogs.id,log.id))
+      .where(eq(habitLogs.habitId,input.habitId)).returning()
 
       return {success:true}
     })

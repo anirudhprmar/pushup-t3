@@ -7,19 +7,13 @@ import {
   BarChart,
   Settings,
   Bell,
-  BicepsFlexed,
   UserIcon,
   ListTodo,
   TargetIcon,
   TreeDeciduousIcon,
-  BookIcon,
   Flame,
 } from "lucide-react";
-
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
-import { HabitForm } from "./HabitFormDialogButton";
 
 interface NavItem {
   label: string;

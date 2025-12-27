@@ -89,7 +89,7 @@ export const habits = createTable(
 ) 
 
 export const habitLogs = createTable(
-  "habit_log",
+  "habit_logs",
   (d) => ({
     id: d.uuid("id").defaultRandom().primaryKey(),
     habitId: d.uuid("habit_id")
@@ -132,7 +132,7 @@ export const userStats = createTable(
 )
 
 export const tasks = createTable(
-  "user_tasks",
+  "tasks",
   (d) => ({
     id:d.uuid("id").defaultRandom().primaryKey(),
     userId: d.text("user_id")

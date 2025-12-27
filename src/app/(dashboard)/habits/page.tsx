@@ -6,82 +6,58 @@ import { HabitCard } from "~/components/HabitCard";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import type { habits } from "~/server/db/schema";
-import { Card, CardContent } from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { HabitForm } from "../_components/HabitForm";
 
-// Type for habit from database
-type Habit = typeof habits.$inferSelect;
-
-
-function HabitCardWithProgress({ 
-  habit, 
-}: { 
-  habit: Habit; 
-}) {
-
-  
- 
-  
-  return (
-    <HabitCard 
-      habit={{...habit}}
-    />
-  );
-}
 
 export default function Home() {
  
 const router = useRouter()
 
-const {data:userHabits,isLoading:loadingUserHabits,error:userHabitsError} = api.habits.getHabits.useQuery()
+const {data:userHabits,isLoading,error} = api.habits.getHabits.useQuery()
 
 
-if(loadingUserHabits){
+  if(isLoading){
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if(error?.data?.code === "UNAUTHORIZED"){
+    return router.push("/login")
+  }
+
+  
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Loader2 className="h-12 w-12 animate-spin text-primary" />
-    </div>
-  );
-}
-
-if(userHabitsError?.data?.code === "UNAUTHORIZED"){
-  return router.push("/login")
-}
-
- const todaysDate = new Date().toLocaleDateString().split("T")[0] ?? ""
- const properTodaysDate = dateAndactualMonth(todaysDate);
-
- // Get in-progress habit IDs
- 
-  return (
-    // <HydrateClient>
     <main className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="mb-8 ">
           <div className="w-full flex justify-between items-center">
             <h1 className="text-2xl font-bold text-foreground">
-              {/* {getGreeting()}! */}
               <p>Habits</p>
             </h1>
-            {/* <p className="text-2xl font-semibold text-muted-foreground">{properTodaysDate}</p> */}
+              <HabitForm/>
           </div>
         </div>
     
-        {loadingUserHabits ? <p>Loading habits...</p> : (
+        {isLoading ? <p>Loading habits...</p> : (
           <div className="space-y-6">
-            {/* In Progress Habits */}
-           
-
             {/* All Habits */}
             {userHabits && userHabits.length > 0 ? (
               <div>
-              <Card className="bg-secondary">
+              <Card className="bg-secondary w-full max-w-4xl">
+                 <CardHeader>
+                  <CardTitle>Current Habits</CardTitle>
+                </CardHeader>
               <CardContent>
 
                 <div className="grid grid-cols-2 gap-2">
                   {
                     userHabits.map((habit) => (
-                      <HabitCardWithProgress 
-                      key={habit.id}
+                      <HabitCard 
+                      key={habit.habits.id}
                       habit={habit}
                       />
                     ))
@@ -98,6 +74,5 @@ if(userHabitsError?.data?.code === "UNAUTHORIZED"){
         )}
       </div>
     </main>
-    // </HydrateClient>
   )
 }
