@@ -5,9 +5,13 @@ import { useState } from "react";
 import { ConfettiCelebration } from "./ConfettiCelebration";
 import { api } from "~/lib/api";
 import { Button } from "./ui/button";
+import { set } from "zod";
 
-export function AnimatedCheck({habitId}:{habitId:string}) {
+export function AnimatedCheck({habitId,checkedStatus}:{habitId:string, checkedStatus?:boolean}) {
   const [isChecked,setIsChecked] = useState(false)
+ 
+
+
 
     const trpc = api.useUtils()
     const markCompleted = api.habits.setHabitCompleted.useMutation({
@@ -19,7 +23,7 @@ export function AnimatedCheck({habitId}:{habitId:string}) {
     const handleCheck = async()=>{
       await markCompleted.mutateAsync({
         habitId,
-        notes:"test",
+        notes:"test2",
       })
       setIsChecked(!isChecked)
     }
@@ -29,7 +33,7 @@ export function AnimatedCheck({habitId}:{habitId:string}) {
       {/* click off update the database with not completed */}
 
       <AnimatePresence mode="wait">
-        {isChecked ? (
+        {isChecked || checkedStatus ? (
           <motion.div
             key="checked"
             initial={{ scale: 0, rotate: -180 }}

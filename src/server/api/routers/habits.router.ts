@@ -8,7 +8,7 @@ export const habitRouter = createTRPCRouter({
 
   getHabits: protectedProcedure
     .query(async ({ ctx }) => {
-        const today = new Date().toISOString().split('T')[0]!;
+        const today = new Date().toDateString();
 
     const data = await ctx.db.select().from(habits).where(eq(habits.userId,ctx.userId)).leftJoin(habitLogs, and(
       eq(habitLogs.habitId, habits.id),

@@ -40,7 +40,6 @@ export function HabitCard({
   const CategoryIcon = category ? getCategoryIcon(category) : null;
   
 
-
   return (
     <div
       className="group relative overflow-hidden rounded-xl backdrop-blur-md bg-white/40 dark:bg-black/20 border-2 "
@@ -56,7 +55,7 @@ export function HabitCard({
 
                 <div className="flex items-center justify-center gap-5 ">
 
-                    <AnimatedCheck habitId={id} />
+                    <AnimatedCheck habitId={id} checkedStatus={habit.habit_logs?.completed ?? false} />
 
                     <span className={`font-semibold text-base relative inline-block ${false ? 'opacity-60 scale-[0.98]':'text-foreground/90 dark:text-foreground '}`} >
                         {name}
