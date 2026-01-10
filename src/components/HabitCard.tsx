@@ -37,8 +37,11 @@ export function HabitCard({
     habits: { id, name, description, category, color = "#3b82f6" },
   } = habit;
 
+  const completed = habit.habit_logs?.completed ?? false;
+
   const CategoryIcon = category ? getCategoryIcon(category) : null;
   
+  console.log(name,completed)
 
   return (
     <div

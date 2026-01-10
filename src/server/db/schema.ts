@@ -138,7 +138,7 @@ export const tasks = createTable(
     userId: d.text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    goalId:d.uuid("goals_id").references(() => goals.id,{onDelete:"cascade"}),
+    habitId:d.uuid("habit_id").references(() => habits.id,{onDelete:"cascade"}),
     task:d.text("task"),
     startedAt:d.timestamp("started_at"),
     completedAt:d.timestamp("completed_at"),
@@ -206,7 +206,7 @@ export const habitLogsRelations = relations(habitLogs,({one})=>({
 }))
 
 export const tasksRelations = relations(tasks,({one})=>({
-  goal:one(goals,{fields:[tasks.goalId],references:[goals.id]})
+  habit:one(habits,{fields:[tasks.habitId],references:[habits.id]})
 }))
 
 

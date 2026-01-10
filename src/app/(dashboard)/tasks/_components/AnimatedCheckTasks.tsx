@@ -2,14 +2,14 @@
 import { Check } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { ConfettiCelebration } from "./ConfettiCelebration";
+import { ConfettiCelebration } from "~/components/ConfettiCelebration";
 import { api } from "~/lib/api";
 
-export function AnimatedCheck({habitId,checkedStatus}:{habitId:string, checkedStatus?:boolean}) {
+export function AnimatedCheckTasks({taskId,habitId,checkedStatus}:{taskId:string,habitId:string, checkedStatus?:boolean}) {
   const [isChecked,setIsChecked] = useState(false)
 
     const trpc = api.useUtils()
-    const markCompleted = api.habits.setHabitCompleted.useMutation({
+    const markCompleted = api.tasks.completeTask.useMutation({
       onSuccess: async () => {
         await trpc.habits.invalidate()
         await trpc.habits.getHabitCompletionDays.invalidate({habitId})
@@ -18,6 +18,7 @@ export function AnimatedCheck({habitId,checkedStatus}:{habitId:string, checkedSt
     
     const handleCheck = async()=>{
       await markCompleted.mutateAsync({
+        taskId,
         habitId,
         notes:"testing123",
         completed:true

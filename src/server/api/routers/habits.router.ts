@@ -5,10 +5,18 @@ import { createTRPCRouter, protectedProcedure} from "~/server/api/trpc";
 import { habits, habitLogs } from "~/server/db/schema";
 
 export const habitRouter = createTRPCRouter({
+  all:protectedProcedure
+    .query(async ({ ctx }) => {
+      const data = await ctx.db.select().from(habits).where(eq(habits.userId,ctx.userId))
+      if(!data){
+        throw new Error("No habits found")
+      }
 
+      return data;
+    }),
   getHabits: protectedProcedure
     .query(async ({ ctx }) => {
-        const today = new Date().toDateString();
+        const today = new Date().toISOString().split('T')[0]!;
 
     const data = await ctx.db.select().from(habits).where(eq(habits.userId,ctx.userId)).leftJoin(habitLogs, and(
       eq(habitLogs.habitId, habits.id),
@@ -43,10 +51,10 @@ export const habitRouter = createTRPCRouter({
 
       if (!newHabit) throw new Error("Failed to create habit");
 
-      await ctx.db.insert(habitLogs).values({
-        habitId:newHabit.id,
-        date:new Date().toDateString().split('T')[0]!
-      })
+      // await ctx.db.insert(habitLogs).values({
+      //   habitId:newHabit.id,
+      //   date:new Date().toDateString().split('T')[0]!
+      // })
 
       return { success: true };
     }),
@@ -83,19 +91,28 @@ export const habitRouter = createTRPCRouter({
     setHabitCompleted:protectedProcedure
     .input(z.object({
       habitId:z.uuid(),
-      notes:z.string().optional()
+      completed:z.boolean(),
+      notes:z.string().optional(),
     }))
     .mutation(async({ctx,input})=>{
-      const today = new Date().toDateString();
+    const today = new Date().toISOString().split('T')[0]!; 
 
-      await ctx.db
-      .update(habitLogs)
-      .set({
-        date:today,
-        completed:true,
-        notes:input.notes
+       await ctx.db
+      .insert(habitLogs)
+      .values({
+        habitId:input.habitId,
+        date: today,
+        completed: input.completed,
+        notes: input.notes ?? null
       })
-      .where(eq(habitLogs.habitId,input.habitId))
+      .onConflictDoUpdate({
+        target: [habitLogs.habitId, habitLogs.date], // Your unique constraint
+        set: { 
+          completed: input.completed,
+          notes: input.notes,
+          updatedAt: new Date()
+        }
+      });
 
       return {success:true}
     })
@@ -261,7 +278,7 @@ export const habitRouter = createTRPCRouter({
       .select()
       .from(habits)
       .where(
-        and (
+        and(
           eq(habits.userId,ctx.userId),
           eq(habits.id,input.habitId)
         )
@@ -280,20 +297,12 @@ export const habitRouter = createTRPCRouter({
           eq(habitLogs.completed,true)
         )
       )
+      
+    const uniqueDates = new Set(completedLogs.map(log => log.date));
 
-      const completedDays = new Map<string,number>();
-      for (const log of completedLogs) {
-        const current = completedDays.get(log.date) ?? 0;
-        completedDays.set(log.date, current+1);
-      }
+    const consistentDays = uniqueDates.size;
 
-      let consistentDays = 0;
-      for(const count of completedDays.values()){
-        if(count>=1){
-          consistentDays++;
-        }
-      }
-
+      // console.log("consistentDays",uniqueDates)
       return {consistentDays};
 
     })

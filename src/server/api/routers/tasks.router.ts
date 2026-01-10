@@ -2,22 +2,22 @@ import { and, eq } from 'drizzle-orm';
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure} from "~/server/api/trpc";
-import { tasks } from '~/server/db/schema';
+import { habitLogs, tasks } from '~/server/db/schema';
 
 
 export const tasksRouter = createTRPCRouter({
     createNewTask:protectedProcedure
     .input(z.object({
-        goalId:z.uuid().optional(),
+        habitId:z.uuid().optional(),
         task:z.string(),
         targetValue:z.int(),
         targetUnit:z.string()
     }))
     .mutation(async ({ctx,input})=>{
-        const {goalId, task, targetValue, targetUnit} = input
+        const {habitId, task, targetValue, targetUnit} = input
 
         await ctx.db.insert(tasks).values({
-            goalId,
+            habitId,
             task,
             targetValue,
             targetUnit,
@@ -26,12 +26,54 @@ export const tasksRouter = createTRPCRouter({
 
         return {success:true}
     }),
+     completeTask:protectedProcedure
+        .input(z.object({
+          taskId:z.uuid(),
+          habitId:z.uuid(),
+          completed:z.boolean(),
+          notes:z.string().optional(),
+        }))
+        .mutation(async({ctx,input})=>{
+            
+        const [task] = await ctx.db
+        .select()
+        .from(tasks)
+        .where(
+            and (
+                eq(tasks.userId,ctx.userId),
+                eq(tasks.id,input.taskId)
+            )
+        )
+        
+        if(!task){
+            return {status:"no task exist"}
+        }
+        const updatedTask = await ctx.db
+        .update(tasks)
+        .set({
+            completed:input.completed,
+            notes:input.notes ?? null,
+            completedAt:new Date()
+        })
+        .where(
+            and (
+                eq(tasks.userId,ctx.userId),
+                eq(tasks.id,input.taskId)
+            )
+        )
+        .returning()
 
-    updateTask:protectedProcedure
+        if(input.habitId === undefined) return;
+        await ctx.db.update(habitLogs).set({completed:true}).where(eq(habitLogs.habitId,input.habitId))
+        
+        return {success:true,task:updatedTask}
+        })
+        ,
+
+    startTask:protectedProcedure
     .input(z.object({
         taskId:z.uuid(),
-        startedAt:z.date(),
-        notes:z.string()
+        startedAt:z.date()
     }))
     .mutation(async ({ctx, input}) => {
         const [task] = await ctx.db
@@ -51,9 +93,7 @@ export const tasksRouter = createTRPCRouter({
         const updatedTask = await ctx.db
         .update(tasks)
         .set({
-            notes:input.notes,
-            completed:true,
-            completedAt:new Date()
+            startedAt:new Date()
         })
         .where(
             and (
@@ -63,7 +103,7 @@ export const tasksRouter = createTRPCRouter({
         )
         .returning()
         
-        return {success:true,week:updatedTask}
+        return {success:true,task:updatedTask}
     }),
 
     deleteTask: protectedProcedure
@@ -97,7 +137,7 @@ export const tasksRouter = createTRPCRouter({
         )
 
          if(!allTasks){
-            throw new Error("No habits found")
+            throw new Error("No tasks found")
         }
 
         return allTasks

@@ -1,30 +1,21 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Crimson_Pro } from "next/font/google";
-import { Lato } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/next"
-import { Poppins } from "next/font/google";
+import { Poppins, JetBrains_Mono } from "next/font/google";
+import { cn } from "~/lib/utils";
 
+const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Pushup - Habit Tracker",
   description: "Build habits and cultivate a new lifestyle",
 }
 
-// const crimsonPro = Crimson_Pro({
-//   subsets: ["latin"],
-//   variable: "--font-crimson-pro",
-// });
-// const lato = Lato({
-//   subsets: ["latin"],
-//   weight: ["100", "300", "400", "700", "900"],
-//   variable: "--font-lato",
-// });
 
 const poppins = Poppins({
   subsets:["latin"],
@@ -37,7 +28,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${poppins.className}`} suppressHydrationWarning>
+    <html lang="en" className={cn(poppins.className, jetbrainsMono.variable)} suppressHydrationWarning>
       <body>
         <Providers>
         <TRPCReactProvider>

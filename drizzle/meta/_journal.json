@@ -36,6 +36,13 @@
       "when": 1766061484808,
       "tag": "0004_wooden_thaddeus_ross",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1767352439662,
+      "tag": "0005_orange_lady_bullseye",
+      "breakpoints": true
     }
   ]
 }

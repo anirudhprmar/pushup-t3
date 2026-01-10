@@ -27,6 +27,7 @@ const {data:userHabits,isLoading,error} = api.habits.getHabits.useQuery()
     return router.push("/login")
   }
 
+  console.log("userHabits",userHabits)
   
   return (
     <main className="min-h-screen bg-background">
