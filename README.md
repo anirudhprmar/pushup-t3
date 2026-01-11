@@ -4,8 +4,7 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 ## Todo
 
-- [X]- tasks page
-- [ ]- profile page fix
+- [ ]- profile page fix (make tasks unique for each day, show previous completed tasks too)
 - [ ]- habits analysis page errors and notes on habit completion
 - [ ]- implement redis rate limiting and caching.
 - [ ]- redo the landing page and login page (keep just a login card)

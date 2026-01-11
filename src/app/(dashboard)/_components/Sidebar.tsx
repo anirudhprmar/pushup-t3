@@ -28,16 +28,6 @@ const navItems: NavItem[] = [
     icon: UserIcon,
   },
   {
-    label: "Leaderboard",
-    href: "/leaderboard",
-    icon: BarChart,
-  },
-  // {
-  //   label: "Accountablity",
-  //   href: "/accountability",
-  //   icon: BicepsFlexed,
-  // },
-  {
     label: "Tasks",
     href: "/tasks",
     icon: ListTodo,
@@ -47,16 +37,26 @@ const navItems: NavItem[] = [
     href: "/habits",
     icon: TreeDeciduousIcon,
   },
-   {
-    label: "Weekly Goals",
-    href: "/weekly-goals",
-    icon: TargetIcon,
-  },
-   {
-    label: "Goals",
-    href: "/goals",
-    icon: Flame,
-  },
+  // {
+  //   label: "Leaderboard",
+  //   href: "/leaderboard",
+  //   icon: BarChart,
+  // },
+  // {
+  //   label: "Accountablity",
+  //   href: "/accountability",
+  //   icon: BicepsFlexed,
+  // },
+  //  {
+  //   label: "Weekly Goals",
+  //   href: "/weekly-goals",
+  //   icon: TargetIcon,
+  // },
+  //  {
+  //   label: "Goals",
+  //   href: "/goals",
+  //   icon: Flame,
+  // },
 ];
 
 export default function DashboardSideBar() {

@@ -4,6 +4,7 @@ import { api } from "~/lib/api"
 import { motion } from "motion/react"
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import SkeletonHabitProgress from "./SkeletonHabitProgress";
 
 interface HabitProps {
 habits: {
@@ -37,9 +38,7 @@ export function HabitsProgressList({habit}: {habit: HabitProps}) {
   
 
   if (isLoading) {
-    return (
-     <div>loading....</div>
-    )
+    return <SkeletonHabitProgress/>
   }
 
   if (!data) {

@@ -62,7 +62,7 @@ export const tasksRouter = createTRPCRouter({
             )
         )
         .returning()
-
+        //Fix this
         if(input.habitId === undefined) return;
         await ctx.db.update(habitLogs).set({completed:true}).where(eq(habitLogs.habitId,input.habitId))
         

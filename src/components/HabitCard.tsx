@@ -4,7 +4,6 @@ import { Badge } from "./ui/badge";
 import { getCategoryIcon } from "~/lib/habitUtils";
 import { AnimatedCheck } from "./AnimatedCheck";
 
-
 interface HabitProps {
 habits: {
         id: string;
@@ -35,7 +34,8 @@ export function HabitCard({
 }) {
   const {
     habits: { id, name, description, category, color = "#3b82f6" },
-  } = habit;
+  } = habit
+  
 
   const completed = habit.habit_logs?.completed ?? false;
 

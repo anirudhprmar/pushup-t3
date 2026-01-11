@@ -1,6 +1,7 @@
 "use client"
 
 import { AnimatedCheckTasks } from "./AnimatedCheckTasks";
+import SkeletonTasks from "./SkeletonTasks";
 
 interface TaskProps {
   id: string;
@@ -24,7 +25,9 @@ export function TaskCard({
 }) {
 
 
-  
+  if(!userTask){
+    return <SkeletonTasks/>
+  }
 
 
   return (
