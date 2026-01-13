@@ -4,7 +4,7 @@ import { api } from "~/lib/api"
 import { motion } from "motion/react"
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import SkeletonHabitProgress from "./SkeletonHabitProgress";
+import SkeletonHabitProgress from "../../profile/_components/SkeletonHabitProgress";
 
 interface HabitProps {
 habits: {
@@ -31,7 +31,7 @@ habits: {
 
 export function HabitsProgressList({habit}: {habit: HabitProps}) {
 
-  const { data, isLoading } = api.habits.getHabitCompletionDays.useQuery({
+  const { data, isLoading } = api.habits.getHabitStatistics.useQuery({
     habitId: habit.habits.id,
   })
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Activity, TreeDeciduous } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { HabitForm } from "../_components/HabitForm";
-import { HabitsProgressList } from "../profile/_components/HabitsProgressList";
+import { HabitsProgressList } from "./_components/HabitsProgressList";
 import SkeletonHabits from "./_components/SkeletonHabits";
 
 

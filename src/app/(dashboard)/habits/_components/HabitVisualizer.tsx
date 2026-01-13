@@ -43,7 +43,7 @@ export default function HabitVisualizer() {
               key={day}
               className={
                 isCompleted 
-                  ? "bg-emerald-400 absolute w-2 h-2 rounded-full shadow-sm shadow-emerald-500/50" 
+                  ? "bg-primary absolute w-2 h-2 rounded-full shadow-sm shadow-emerald-500/50" 
                   : "absolute w-2 h-2 rounded-full bg-zinc-700"
               }
               style={{

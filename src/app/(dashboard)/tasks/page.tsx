@@ -43,7 +43,7 @@ export default function Tasks() {
             </CardHeader>
           <CardContent>
 
-              { userTasks && userTasks?.length === 0 ? <div>No habits found. Start by creating a new habit!</div> : null}
+              { userTasks && userTasks?.length === 0 ? <div>No Tasks found. Start by creating a new task!</div> : null}
             <div className="grid grid-cols-1 gap-2">
               {
                 userTasks?.map((task) => (
