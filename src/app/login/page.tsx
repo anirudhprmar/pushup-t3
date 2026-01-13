@@ -17,26 +17,30 @@ function SignInContent() {
 
   return (
 
-        <div className="min-h-screen relative w-full bg-black flex flex-col items-center justify-center overflow-hidden py-6 md:py-12">
+        <main className="min-h-screen relative w-full bg-black flex flex-col items-center justify-center overflow-hidden py-6 md:py-12" role="main" aria-labelledby="page-title">
         
-      <div className="flex flex-col gap-4 absolute md:top-10 top-6 items-center md:items-start px-4 md:px-0">
+      <header className="flex flex-col gap-4 absolute md:top-10 top-6 items-center md:items-start px-4 md:px-0">
         <Link
               prefetch={true}
               className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
               href="/"
             >
+          <span className="sr-only">Home</span>
         </Link>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl tracking-wide text-foreground font-semibold text-center md:text-left">Welcome to PushUp</h1>
+          <h1 id="page-title" className="text-2xl sm:text-3xl md:text-4xl tracking-wide text-foreground font-semibold text-center md:text-left">Welcome to PushUp</h1>
 
-      </div>
-    <div className="flex items-center justify-center w-full px-4 mt-8 md:mt-0">
-      <Card>
+      </header>
+    <section aria-labelledby="auth-heading" className="flex items-center justify-center w-full px-4 mt-8 md:mt-0">
+      <Card asChild>
         <CardContent>
-        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-6">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-6" role="region" aria-labelledby="auth-heading">
+          <h2 id="auth-heading" className="sr-only">Sign in options</h2>
      
     <Button
       variant="outline"
       className={cn("w-full gap-2")}
+      aria-label="Sign in with Google"
+      aria-busy={loading}
       disabled={loading}
       onClick={async () => {
         try {
@@ -73,6 +77,8 @@ function SignInContent() {
         width="0.98em"
         height="1em"
         viewBox="0 0 256 262"
+        aria-hidden="true"
+        focusable="false"
         >
         <path
           fill="#4285F4"
@@ -94,7 +100,7 @@ function SignInContent() {
       Login with Google
     </Button>
      
-    <p className="text-xs text-center text-muted-foreground">
+    <footer className="text-xs text-center text-muted-foreground">
           By signing in, you agree to our{" "}
           <Link
             href="/terms-of-service"
@@ -109,15 +115,14 @@ function SignInContent() {
           >
             Privacy Policy
           </Link>
-        </p>
+        </footer>
         </div>
         </CardContent>
       </Card>
 
-    </div>
+    </section>
 
-    
-    </div>
+    </main>
   );
 }
 

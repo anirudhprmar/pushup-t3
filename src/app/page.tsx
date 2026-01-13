@@ -10,22 +10,34 @@ export default function Landing() {
   return (
     <div className="relative min-h-full overflow-hidden text-black w-full bg-white">
 
-      {/* Navigation */}
-      <Navbar/>
+      <header aria-labelledby="site-nav" className="w-full">
+        <nav id="site-nav">
+          <Navbar />
+        </nav>
+      </header>
 
-      {/* Hero Section */}
-     <HeroSection/>
+      <main id="main" role="main" aria-labelledby="main-heading" className="w-full">
+        <h1 id="main-heading" className="sr-only">PushUp — productivity and habits</h1>
 
-      {/* Features Section */}
-     <Features/>
+        <section aria-labelledby="hero-heading" className="w-full">
+          <h2 id="hero-heading" className="sr-only">Hero</h2>
+          <HeroSection />
+        </section>
 
-      {/* faq */}
+        <section aria-labelledby="features-heading" className="w-full">
+          <h2 id="features-heading" className="sr-only">Features</h2>
+          <Features />
+        </section>
 
-      {/* Final CTA Section */}
-      <LandingCTA/>
+        <section aria-labelledby="cta-heading" className="w-full">
+          <h2 id="cta-heading" className="sr-only">Call to action</h2>
+          <LandingCTA />
+        </section>
+      </main>
 
-      {/* footer */}
-      <Footer />
+      <footer role="contentinfo" className="w-full">
+        <Footer />
+      </footer>
     </div>
   )
 }
