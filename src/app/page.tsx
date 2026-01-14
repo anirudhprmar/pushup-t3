@@ -5,6 +5,8 @@ import HeroSection from "~/components/HeroSection"
 import Navbar from "~/components/Navbar"
 import Footer from "~/components/Footer"
 import LandingCTA from "~/components/LandingCTA"
+import FAQ from "~/components/FAQ"
+import Demo from "~/components/Demo"
 
 export default function Landing() {
   return (
@@ -24,9 +26,18 @@ export default function Landing() {
           <HeroSection />
         </section>
 
+
         <section aria-labelledby="features-heading" className="w-full">
           <h2 id="features-heading" className="sr-only">Features</h2>
           <Features />
+        </section>
+
+        <section>
+          <Demo/>
+        </section>
+        
+        <section>
+          <FAQ/>
         </section>
 
         <section aria-labelledby="cta-heading" className="w-full">

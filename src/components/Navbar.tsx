@@ -15,15 +15,15 @@ export default function Navbar() {
   return (
     <nav
       className={`
-        sticky top-0 z-50 w-full border 
+        fixed  top-0 z-50 w-full border 
         transition-all duration-300 ease-in-out
-        ${isMenuOpen ? 'bg-white' : 'bg-white/80 backdrop-blur-md'}
+        ${isMenuOpen ? 'bg-white' : 'bg-transparent backdrop-blur-md'}
       `}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
         {/* --- MAIN HEADER (Visible Always) --- */}
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-14 items-center justify-between">
           
           {/* Logo */}
           <div className="flex items-center">
@@ -34,8 +34,8 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center md:gap-8">
             <ul className="flex gap-6 text-sm font-medium text-gray-600">
               <li className="hover:text-black cursor-pointer transition-colors">Features</li>
+              <li className="hover:text-black cursor-pointer transition-colors">Demo</li>
               {/* <li className="hover:text-black cursor-pointer transition-colors">Pricing</li> */}
-              <li className="hover:text-black cursor-pointer transition-colors">Blog</li>
               <li className="hover:text-black cursor-pointer transition-colors">FAQ</li>
             </ul>
             <Link href="/login">
@@ -76,7 +76,7 @@ export default function Navbar() {
             <ul className="flex flex-col gap-4 pt-2 text-center text-lg font-medium text-gray-600">
               <li className="py-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">Features</li>
               {/* <li className="py-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">Pricing</li> */}
-              <li className="py-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">Blog</li>
+              <li className="py-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">Demo</li>
               <li className="py-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">FAQ</li>
               <li className="pt-2">
                  <Link href="/login" className="block w-full" onClick={() => setIsMenuOpen(false)}>

@@ -1,87 +1,134 @@
 import { 
   Target, 
-  TrendingUp, 
+  ChartLine, 
   CalendarCheck, 
   Trophy, 
   Flame, 
   Zap,
 } from "lucide-react"
 import React from 'react'
+import { Card } from "~/components/ui/card"
 
 export default function Features() {
   return (
-    <section className="relative py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4">
-              Everything You Need to{" "}
-              <span className="text-black/30">Win</span>
-            </h2>
-            <p className="text-lg text-black/60 max-w-2xl mx-auto">
-              Make you a doer, not a thinker. Track, document, and analyze your growth like never before.
-            </p>
+    <section className="relative py-24 bg-gradient-to-b from-white to-gray-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-20">
+          <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+            Simple. Powerful. Transformative.
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold mb-6 font-serif">
+            Build Habits That <span className="text-primary">Last</span>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-sm mx-auto">
+            Transform your life one day at a time. Track consistency, visualize progress, and achieve your goals with our minimalist approach.
+          </p>
+        </div>
+
+       
+
+       
+
+        {/* Features Grid */}
+        <div className="space-y-20 max-w-4xl mx-auto">
+          {/* Feature 1 */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-primary/10 rounded-xl">
+                  <Target className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-3xl font-bold font-serif">365-Day Commitment</h4>
+              </div>
+              <p className="text-md text-muted-foreground leading-relaxed">
+                All or nothing. Miss even one habit, and the counter resets. This isn't about perfection—it's about understanding that every single day builds who you are. True transformation requires unwavering consistency.
+              </p>
+            </div>
+            <Card className="order-1 md:order-2 p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-7xl font-black text-primary mb-4">365</div>
+                <p className="text-xl font-semibold text-accent">Days to Transform</p>
+              </div>
+            </Card>
           </div>
 
-          <div className="w-full mx-auto flex-col gap-8">
-
-            {/* Feature 1 */}
-            <div className="flex  items-center justify-center gap-5 p-4 mx-auto">
-
-              <div className="p-50 bg-black rounded-2xl">
+          {/* Feature 2 */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+              <div className="w-full">
+                <ChartLine className="w-16 h-16 text-primary mx-auto mb-4" />
+                <div className="flex items-end justify-center gap-2">
+                  <div className="w-12 h-20 bg-primary/30 rounded-t"></div>
+                  <div className="w-12 h-32 bg-primary/50 rounded-t"></div>
+                  <div className="w-12 h-48 bg-primary/70 rounded-t"></div>
+                  <div className="w-12 h-56 bg-primary rounded-t"></div>
+                </div>
               </div>
-
-              <div className="flex flex-col gap-2 items-start">
-                <h3 className="text-4xl font-bold mb-3 font-mono">365-Day Commitment</h3>
-                <p className="text-black/70 leading-relaxed max-w-md">
-                    All or nothing. Miss even one habit, and the counter resets. This isn&apos;t about perfection—it&apos;s about understanding that every single day builds who you are.
-                </p>
+            </Card>
+            <div>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-primary/10 rounded-xl">
+                  <ChartLine className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-3xl font-bold font-serif">Growth Visualization</h4>
               </div>
+              <p className="text-md text-muted-foreground leading-relaxed">
+                Watch your life take an upward spiral with real-time growth charts. See how daily consistency compounds into exponential transformation. Data-driven insights show your progress clearly.
+              </p>
             </div>
+          </div>
 
-            {/* Feature 2 */}
-            <div className="flex items-center justify-center gap-8 p-4 mx-auto">
-
-              <div className="flex flex-col gap-2 items-start">
-                <h3 className="text-4xl font-bold mb-3 font-mono">Growth Visualization</h3>
-                <p className="text-black/70 leading-relaxed max-w-md">
-                     Watch your life take an upward spiral with real-time growth charts. See how daily consistency compounds into exponential transformation.
-                </p>
+          {/* Feature 3 */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-primary/10 rounded-xl">
+                  <CalendarCheck className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-3xl font-bold font-serif">Full-Year Calendar</h4>
               </div>
-              <div className="p-50 bg-black rounded-2xl">
-              </div>
-
+              <p className="text-md text-muted-foreground leading-relaxed">
+                Track your complete 365-day journey with a visual calendar showing every completed day. Visualize your commitment and watch your transformation unfold in real-time. Never lose sight of your progress.
+              </p>
             </div>
-
-            {/* Feature 3 */}
-            <div className="flex items-center justify-center gap-8 p-4 mx-auto">
-
-              <div className="p-50 bg-black rounded-2xl">
+            <Card className="order-1 md:order-2 p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+              <div className="grid grid-cols-7 gap-2">
+                {Array.from({ length: 28 }).map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`w-6 h-6 rounded ${
+                      i < 20 ? 'bg-primary' : 'bg-gray-200'
+                    }`}
+                  />
+                ))}
               </div>
+            </Card>
+          </div>
 
-              <div className="flex flex-col gap-2 items-start">
-                <h3 className="text-4xl font-bold mb-3 font-mono">Full-Year Calendar</h3>
-                <p className="text-black/70 leading-relaxed max-w-md">
-                     Track your complete 365-day journey with a calendar showing every completed day. Visualize your commitment and transformation unfold.
-                </p>
+          {/* Feature 4 */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+              <div className="text-center space-y-6">
+                <Flame className="w-20 h-20 text-primary mx-auto" />
+                <div className="text-5xl font-black text-primary">20</div>
+                <p className="text-xl font-semibold text-accent">Day Streak</p>
               </div>
+            </Card>
+            <div>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-primary/10 rounded-xl">
+                  <Trophy className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-3xl font-bold font-serif">Streak Accountability</h4>
+              </div>
+              <p className="text-md text-muted-foreground leading-relaxed">
+                Stay motivated with streak tracking and milestone celebrations. Document your progress, analyze patterns, and make self-improvement engaging. Every day adds to your legacy of consistency.
+              </p>
             </div>
-
-            {/* Feature 4 */}
-               <div className="flex items-center justify-center gap-8 p-4 mx-auto">
-
-              <div className="flex flex-col gap-2 items-start">
-                <h3 className="text-4xl font-bold mb-3 font-mono">Accountability System</h3>
-                <p className="text-black/70 leading-relaxed max-w-md">
-                   Make yourself accountable. Document your progress, analyze patterns, and make self-improvement fun through gamification.
-                </p>
-              </div>
-              <div className="p-50 bg-black rounded-2xl">
-              </div>
-
-            </div>
-           
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   )
 }

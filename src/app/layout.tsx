@@ -6,10 +6,13 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/next"
-import { Poppins, JetBrains_Mono } from "next/font/google";
 import { cn } from "~/lib/utils";
+import { Instrument_Serif, Inter } from "next/font/google";
 
-const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-sans'});
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
+const instrumentSerif = Instrument_Serif({ subsets: ['latin'],weight:'400' ,variable: '--font-instrumentalSerif' });
 
 export const metadata: Metadata = {
   title: "Pushup - Habit Tracker",
@@ -17,18 +20,11 @@ export const metadata: Metadata = {
 }
 
 
-const poppins = Poppins({
-  subsets:["latin"],
-  weight: ["100", "300", "400", "700", "900"],
-  variable: "--font-poppins",
-
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cn(poppins.className, jetbrainsMono.variable)} suppressHydrationWarning>
+    <html lang="en" className={cn(inter.variable, instrumentSerif.variable)} suppressHydrationWarning>
       <body>
         <Providers>
         <TRPCReactProvider>
