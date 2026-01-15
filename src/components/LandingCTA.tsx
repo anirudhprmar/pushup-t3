@@ -1,7 +1,3 @@
-import Link from 'next/link'
-import React from 'react'
-import { Button } from './ui/button'
-import { ArrowRight, Target, Sparkles, Zap } from 'lucide-react'
 import CTAButton from './CTAButton'
 
 export default function LandingCTA() {
@@ -13,7 +9,7 @@ export default function LandingCTA() {
 
           {/* Content */}
           <div className="relative text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight text-secondary font-serif">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight text-foreground font-serif">
               Start <span className="text-primary">Building Discipline</span> with Habits
             </h2>
             

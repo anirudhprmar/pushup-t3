@@ -174,15 +174,12 @@ export const habitRouter = createTRPCRouter({
       return habitData;
     }),
 
-    getLast90DaysLogs: protectedProcedure
+    getLogs: protectedProcedure
     .input(z.object({
       habitId: z.uuid(),
     }))
     .query(async ({ ctx, input }) => {
       const today = new Date();
-      today.setHours(23, 59, 590, 999);
-      const ninetyDaysAgo = new Date(today);
-      ninetyDaysAgo.setDate(today.getDate() - 90);
 
       const logs = await ctx.db
         .select()
@@ -190,12 +187,10 @@ export const habitRouter = createTRPCRouter({
         .where(
           and (
             eq(habitLogs.habitId, input.habitId),
-            gte(habitLogs.date, ninetyDaysAgo.toDateString()),
             lte(habitLogs.date, today.toDateString())
           )
         )
-        .orderBy(desc(habitLogs.date))
-        .limit(91)
+        .orderBy(habitLogs.date)
 
         return logs;  
     }),

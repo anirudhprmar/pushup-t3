@@ -10,7 +10,6 @@ import { getCategoryIcon } from "~/lib/habitUtils";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/ui/chart";
 import { useState } from "react";
-import { cn } from "~/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +21,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
+import CircularProgress from "../../_components/CircularProgress";
+import WeeklyCalender from "../../_components/WeeklyCalender";
 
 type TimePeriod = "7" | "30" | "90";
 
@@ -33,7 +34,7 @@ export default function HabitAnalysisPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { data: habit, isLoading: habitLoading } = api.habits.getHabitById.useQuery({ habitId });
-  const { data: logs, isLoading: logsLoading } = api.habits.getLast90DaysLogs.useQuery({ habitId });
+  const { data: logs, isLoading: logsLoading } = api.habits.getLogs.useQuery({ habitId });
   const { data: statistics, isLoading: statsLoading } = api.habits.getHabitStatistics.useQuery({ habitId });
   
   const deleteHabitMutation = api.habits.deleteHabit.useMutation({
@@ -79,111 +80,9 @@ export default function HabitAnalysisPage() {
                       selectedPeriod === "30" ? statistics?.month : 
                       statistics?.ninetyDays;
 
-  // Circular progress component - shows actual value with ring based on percentage
-  const CircularProgress = ({ value, label, color, maxValue = 100 }: { value: number; label: string; color: string; maxValue?: number }) => {
-    // Use smaller size on mobile (70px) and larger on desktop (90px)
-    const mobileSize = 70;
-    const desktopSize = 90;
-    const percentage = maxValue > 0 ? Math.min(100, (value / maxValue) * 100) : 0;
-    
-    return (
-      <div className="flex flex-col items-center gap-2">
-        {/* Mobile */}
-        <div className="relative sm:hidden" style={{ width: mobileSize, height: mobileSize }}>
-          <svg className="transform -rotate-90" width={mobileSize} height={mobileSize}>
-            <circle
-              cx={mobileSize / 2}
-              cy={mobileSize / 2}
-              r={(mobileSize - 8) / 2}
-              stroke="currentColor"
-              strokeWidth="6"
-              fill="none"
-              className="text-muted/20"
-            />
-            <circle
-              cx={mobileSize / 2}
-              cy={mobileSize / 2}
-              r={(mobileSize - 8) / 2}
-              stroke={color}
-              strokeWidth="6"
-              fill="none"
-              strokeDasharray={2 * Math.PI * ((mobileSize - 8) / 2)}
-              strokeDashoffset={2 * Math.PI * ((mobileSize - 8) / 2) - (percentage / 100) * 2 * Math.PI * ((mobileSize - 8) / 2)}
-              strokeLinecap="round"
-              className="transition-all duration-500"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg font-bold" style={{ color }}>{value}</span>
-          </div>
-        </div>
-        
-        {/* Desktop */}
-        <div className="relative hidden sm:block" style={{ width: desktopSize, height: desktopSize }}>
-          <svg className="transform -rotate-90" width={desktopSize} height={desktopSize}>
-            <circle
-              cx={desktopSize / 2}
-              cy={desktopSize / 2}
-              r={(desktopSize - 8) / 2}
-              stroke="currentColor"
-              strokeWidth="6"
-              fill="none"
-              className="text-muted/20"
-            />
-            <circle
-              cx={desktopSize / 2}
-              cy={desktopSize / 2}
-              r={(desktopSize - 8) / 2}
-              stroke={color}
-              strokeWidth="6"
-              fill="none"
-              strokeDasharray={2 * Math.PI * ((desktopSize - 8) / 2)}
-              strokeDashoffset={2 * Math.PI * ((desktopSize - 8) / 2) - (percentage / 100) * 2 * Math.PI * ((desktopSize - 8) / 2)}
-              strokeLinecap="round"
-              className="transition-all duration-500"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg font-bold" style={{ color }}>{value}</span>
-          </div>
-        </div>
-        
-        <span className="text-xs text-muted-foreground text-center">{label}</span>
-      </div>
-    );
-  };
 
-  // Weekly calendar view
-  const WeeklyCalendar = () => {
-    const last7Days = logs?.slice(0, 7).reverse() ?? [];
-    
-    return (
-      <div className="flex justify-between gap-1 sm:gap-2">
-        {last7Days.map((log) => {
-          const dayOfWeek = new Date(log.date).toLocaleDateString('en-US', { weekday: 'short' });
-          return (
-            <div key={log.id} className="flex flex-col items-center gap-1">
-              <div
-                className={cn(
-                  "w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-xs font-medium transition-all",
-                  log.completed 
-                    ? "text-white shadow-lg" 
-                    : "bg-muted/30 text-muted-foreground"
-                )}
-                style={{
-                  backgroundColor: log.completed ? (habit.color ?? "#3b82f6") : undefined,
-                }}
-              >
-                {new Date(log.date).getDate()}
-              </div>
-              <span className="text-[10px] text-muted-foreground">{dayOfWeek}</span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
+console.log("inparet",logs)
+ 
   return (
     <main className="min-h-screen bg-background pb-20">
       <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
@@ -270,7 +169,7 @@ export default function HabitAnalysisPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              <CircularProgress 
+              <CircularProgress
                 value={currentStats?.completedDays ?? 0} 
                 label="Days Done" 
                 color={habit.color ?? "#3b82f6"}
@@ -307,7 +206,7 @@ export default function HabitAnalysisPage() {
                 borderColor: selectedPeriod === period ? (habit.color ?? "#3b82f6") : undefined,
               }}
             >
-              {period}D
+              {period}
             </Button>
           ))}
         </div>
@@ -315,10 +214,10 @@ export default function HabitAnalysisPage() {
         {/* Weekly Calendar */}
         <Card className="mb-4 sm:mb-6">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base sm:text-lg">Last 7 Days</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Days Logged</CardTitle>
           </CardHeader>
           <CardContent>
-            <WeeklyCalendar />
+            <WeeklyCalender  logs={logs ?? []} habitColor={habit?.color ?? "#3b82f6"}/>
           </CardContent>
         </Card>
 

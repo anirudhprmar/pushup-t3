@@ -66,20 +66,21 @@ export function HabitsProgressList({habit}: {habit: HabitProps}) {
             </span>  
           </span>
           <span className={`text-md font-bold ${
-            data.consistentDays >= 292 ? "text-green-400" :
-            data.consistentDays >= 182 ? "text-yellow-400" : "text-red-400"
+            data.week.completedDays >= 292 ? "text-green-400" :
+            data.week.completedDays >= 292 ? "text-green-400" :
+            data.week.completedDays >= 182 ? "text-yellow-400" : "text-red-400"
           }`}>
-            {data.consistentDays === 1 ? `${data.consistentDays} day` : `${data.consistentDays} days`}
+            { data.week.completedDays === 1 ? `${data.week.completedDays} day` : `${data.week.completedDays} days`}
           </span>
         </div>
         <div className="h-1.5 w-full bg-black/40 rounded-full overflow-hidden">
           <motion.div 
             initial={{ width: 0 }}
-            animate={{ width: `${data.consistentDays}%` }}
+            animate={{ width: `${data.week.completedDays}%` }}
             transition={{ duration: 1, delay: 0.2 }}
             className={`h-full rounded-full ${
-              data.consistentDays >= 292 ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" :
-              data.consistentDays >= 182 ? "bg-yellow-500" : "bg-red-500"
+              data.week.completedDays >= 292 ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" :
+             data.week.completedDays >= 182 ? "bg-yellow-500" : "bg-red-500"
             }`}
           />
         </div>

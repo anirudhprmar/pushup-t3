@@ -13,7 +13,7 @@ export default function HeroSection() {
     const count = useCounter(1500, 2000)
     
   return (
-    <section className="relative w-full bg-secondary-foreground">
+    <section className="relative w-full bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
             

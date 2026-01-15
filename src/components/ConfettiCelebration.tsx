@@ -8,14 +8,15 @@ interface ConfettiCelebrationProps {
   color?: string
 }
 
-export function ConfettiCelebration({ trigger, color = "#3b82f6" }: ConfettiCelebrationProps) {
+export function ConfettiCelebration({ trigger, color  }: ConfettiCelebrationProps) {
   React.useEffect(() => {
     if (trigger) {
       // Fire confetti
       const count = 200
       const defaults = {
         origin: { y: 0.7 },
-        colors: [color, "#ffffff", "#fbbf24"],
+        colors: ["#0D47A1", "#1565C0", "#1E88E5", "#42A5F5", "#90CAF9","#37474F"]
+
       }
 
       function fire(particleRatio: number, opts: confetti.Options) {
@@ -55,5 +56,5 @@ export function ConfettiCelebration({ trigger, color = "#3b82f6" }: ConfettiCele
     }
   }, [trigger, color])
 
-  return null // This component doesn't render anything
+  return null 
 }

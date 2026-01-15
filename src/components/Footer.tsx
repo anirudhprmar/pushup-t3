@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Logo */}
           <div className="mb-12">
             <Link href="/" className="inline-block">
-              <span className="text-2xl font-bold text-secondary">PushUp</span>
+              <span className="text-2xl font-bold text-foreground">PushUp</span>
             </Link>
           </div>
 
@@ -18,7 +18,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:gap-12 mb-16">
             {/* Product */}
             <div>
-              <h3 className="text-sm font-semibold text-secondary mb-4">Product</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Product</h3>
               <ul className="space-y-3">
                 <FooterLink href="#features" label="Features" />
                 <FooterLink href="#faq" label="Use Case" />
@@ -30,7 +30,7 @@ export default function Footer() {
 
             {/* Get in Touch */}
             <div>
-              <h3 className="text-sm font-semibold text-secondary mb-4">Get in Touch</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Get in Touch</h3>
               <ul className="space-y-3">
                 <li className="text-sm text-muted-foreground">
                   <Link href={'mailto:anirudhparmar2004@gmail.com'}>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Timer } from "lucide-react";
+// import { Timer } from "lucide-react";
 import { AnimatedCheckTasks } from "./AnimatedCheckTasks";
 import SkeletonTasks from "./SkeletonTasks";
 
@@ -51,7 +51,7 @@ export function TaskCard({
 
                 </div>
 
-                <Timer/>
+                {/* <Timer/> */}
           </div>
         </div>
     </div>

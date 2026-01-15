@@ -6,7 +6,7 @@ Habit tracker , where your daily review is shown to others, there's a leaderboar
 
 
 - [ ]- task operations start and completed (also form fix)
-- [ ]- redo the landing page and login page (keep just a login card)
+- [X]- redo the landing page and login page (keep just a login card)
 - [ ]- habits analysis page errors and notes on habit / task completion
 - [ ]- implement redis rate limiting and caching.
 - [ ]- optimize code to server side render, reduce client side code.
