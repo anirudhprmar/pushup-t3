@@ -7,16 +7,16 @@ export const siteConfig = {
   name: "Pushup",
   tagline: "Build Habits That Last",
   description: "Transform your life with the all-or-nothing habit tracker. Track 365 days of consistency, visualize progress, and build habits that truly last.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pushup.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pushup.life",
   ogImage: "/og-default.png",
-  twitterHandle: "@pushupapp",
+  // twitterHandle: "@pushupapp",
   locale: "en_US",
   themeColor: "#6366f1",
   
   // Social links
   social: {
-    twitter: "https://twitter.com/pushupapp",
-    github: "https://github.com/pushupapp",
+    twitter: "https://twitter.com/anirudhprmar",
+    github: "https://github.com/anirudhprmar",
   },
   
   // Contact
