@@ -3,34 +3,27 @@ import React from 'react'
 import {motion} from "motion/react"
 import Link from 'next/link'
 import CTAButton from './CTAButton'
-import { Flame } from 'lucide-react'
-import { useCounter } from '~/hooks/UseCounter'
-import Image from 'next/image'
-import { AvatarCircles } from './ui/avatar-circles'
 import { DashboardSafari } from './DashboardOnSafari'
 
 export default function HeroSection() {
-    const count = useCounter(1500, 2000)
     
   return (
     <section className="relative w-full bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-26 md:py-26">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
             
           
 
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight tracking-tight text-slate-900">
-              Organize your
+            <h1 className="max-w-4xl text-5xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight tracking-tight text-slate-900">
+              Keep life <span className='font-serif italic'>organized</span>
               <br />
-              <span className='font-serif italic'>habits</span> and <span className="font-serif italic">life.</span>
+              and work <span className="font-serif italic">moving</span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl">
-              Simplify life for both you and your team.
-              <br />
-              The most productive habit tracker app.
+            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-md">
+              Track, monitor, and grow with all your habits and tasks unified in one powerful app.
             </p>
 
             <div className='flex flex-col items-center justify-center gap-4'>

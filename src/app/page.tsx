@@ -32,9 +32,9 @@ export default function Landing() {
           <Features />
         </section>
 
-        <section>
+        {/* <section>
           <Demo/>
-        </section>
+        </section> */}
         
         <section>
           <FAQ/>
