@@ -15,44 +15,34 @@ export const env = createEnv({
       BETTER_AUTH_URL: z.string(),
       AUTH_GOOGLE_ID: z.string(),
       AUTH_GOOGLE_SECRET: z.string(),
-      R2_UPLOAD_IMAGE_ACCESS_KEY_ID:z.string(),
-      R2_UPLOAD_IMAGE_SECRET_ACCESS_KEY:z.string(),
-      CLOUDFLARE_ACCOUNT_ID:z.string(),
-      R2_UPLOAD_IMAGE_BUCKET_NAME:z.string(),
-      R2_PUBLIC_BASE_URL:z.string(),
-      UPSTASH_REDIS_REST_URL: z.string(),
-      UPSTASH_REDIS_REST_TOKEN: z.string(),
-  },
-
-  /**
-   * Specify your client-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars. To expose them to the client, prefix them with
-   * `NEXT_PUBLIC_`.
-   */
-  client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_APP_URL: z.string(),
-  },
-
-  /**
-   * You can't destruct`process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
-   */
-  runtimeEnv: {
+    },
+    
+    /**
+     * Specify your client-side environment variables schema here. This way you can ensure the app
+     * isn't built with invalid env vars. To expose them to the client, prefix them with
+     * `NEXT_PUBLIC_`.
+    */
+   client: {
+     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+     NEXT_PUBLIC_APP_URL: z.string(),
+     NEXT_PUBLIC_POSTHOG_KEY:z.string(),
+     NEXT_PUBLIC_POSTHOG_HOST:z.string()
+    },
+    
+    /**
+     * You can't destruct`process.env` as a regular object in the Next.js edge runtimes (e.g.
+     * middlewares) or client-side so we need to destruct manually.
+    */
+   runtimeEnv: {
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     BETTER_AUTH_URL:process.env.BETTER_AUTH_URL,
     AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
-    R2_UPLOAD_IMAGE_ACCESS_KEY_ID: process.env.R2_UPLOAD_IMAGE_ACCESS_KEY_ID,
-    R2_UPLOAD_IMAGE_SECRET_ACCESS_KEY: process.env.R2_UPLOAD_IMAGE_SECRET_ACCESS_KEY,
-    CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID,
-    R2_UPLOAD_IMAGE_BUCKET_NAME: process.env.R2_UPLOAD_IMAGE_BUCKET_NAME,
-    R2_PUBLIC_BASE_URL: process.env.R2_PUBLIC_BASE_URL,
-    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    NEXT_PUBLIC_POSTHOG_KEY:process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_POSTHOG_HOST:process.env.NEXT_PUBLIC_POSTHOG_HOST
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

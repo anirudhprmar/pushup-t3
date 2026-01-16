@@ -1,13 +1,16 @@
 import "~/styles/globals.css";
+import dynamic from "next/dynamic";
 
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "./providers";
-import { Analytics } from "@vercel/analytics/next"
 import { cn } from "~/lib/utils";
 import { Instrument_Serif, Inter } from "next/font/google";
+
+const PostHogPageView = dynamic(() => import("~/providers/PostHogPageView"), { ssr: true });
+
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -28,9 +31,9 @@ export default function RootLayout({
       <body>
         <Providers>
         <TRPCReactProvider>
+          <PostHogPageView />
             {children}
           <Toaster/>
-          <Analytics />
         </TRPCReactProvider>
         </Providers>
       </body>
