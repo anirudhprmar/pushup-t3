@@ -18,7 +18,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
             {/* Product */}
             <div>
-              <h3 className="text-sm font-semibold text-foreground mb-4">Product</h3>
+              <h3 className="text-sm font-semibold text-gray-800 mb-4">Product</h3>
               <ul className="space-y-3">
                 <FooterLink href="#features" label="Features" />
                 <FooterLink href="#faq" label="Use Case" />
@@ -30,7 +30,7 @@ export default function Footer() {
 
             {/* Get in Touch */}
             <div>
-              <h3 className="text-sm font-semibold text-foreground mb-4">Get in Touch</h3>
+              <h3 className="text-sm font-semibold text-gray-800 mb-4">Get in Touch</h3>
               <ul className="space-y-3">
                 <li className="text-sm text-muted-foreground">
                   <Link href={'mailto:anirudhparmar2004@gmail.com'}>
