@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useForm, type SubmitHandler } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -40,19 +40,19 @@ const formSchema = z.object({
     .min(3, "Task name must be at least 3 characters.")
     .max(50, "Task name must be at most 50 characters."),
   habitId: z.string().optional(),
-  targetValue:z.coerce.number(),
-  targetUnit:z.string()
+  targetValue: z.number().min(1, "Target value must be at least 1."),
+  targetUnit: z.string().min(1, "Target unit is required.")
 })
 
 export function TaskForm() {
   const [open, setOpen] = React.useState(false)
  
-  const form = useForm<z.input<typeof formSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
      habitId: undefined,
      task: "",
-     targetValue: undefined,
+     targetValue: 0,
      targetUnit:""
     },
   })
@@ -76,7 +76,7 @@ export function TaskForm() {
     }
   })
   //habitId : links tasks to that habit, if that task related to that habit is completed then we can use that to update habit log with completed true.
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
     try {
       const createTask = await create.mutateAsync({
         habitId: data.habitId === "" ? undefined : data.habitId,
@@ -108,7 +108,6 @@ export function TaskForm() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
         <DialogTrigger asChild>
           <Button
             variant="default"
@@ -182,8 +181,10 @@ export function TaskForm() {
                       <InputGroup>
                         <InputGroupInput
                           {...field}
-                          placeholder="e.g. 10 min, 20 pages"
-                          className="min-h-20 resize-none"
+                          type="number"
+                          onChange={(e) => field.onChange(e.target.value === "" ? 0 : Number(e.target.value))}
+                          placeholder="e.g. 10"
+                          className="min-h-10 resize-none"
                           aria-invalid={fieldState.invalid}
                         />
                       </InputGroup>
@@ -227,7 +228,6 @@ export function TaskForm() {
             </Button>
           </DialogFooter>
         </DialogContent>
-      </form>
     </Dialog>
   )
 }

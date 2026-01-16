@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, lte } from 'drizzle-orm';
+import { and, eq, lte } from 'drizzle-orm';
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure} from "~/server/api/trpc";

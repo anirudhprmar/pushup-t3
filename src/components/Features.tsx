@@ -4,14 +4,13 @@ import {
   CalendarCheck, 
   Trophy, 
   Flame, 
-  Zap,
 } from "lucide-react"
 import React from 'react'
 import { Card } from "~/components/ui/card"
 
 export default function Features() {
   return (
-    <section className="relative py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="relative py-24 bg-linear-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-20">
@@ -45,7 +44,7 @@ export default function Features() {
                 All or nothing. Miss even one habit, and the counter resets. This isn&apos;t about perfection—it&apos;s about understanding that every single day builds who you are. True transformation requires unwavering consistency.
               </p>
             </div>
-            <Card className="order-1 md:order-2 p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+            <Card className="order-1 md:order-2 p-8 bg-linear-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
               <div className="text-center">
                 <div className="text-7xl font-black text-primary mb-4">365</div>
                 <p className="text-xl font-semibold text-accent">Days to Transform</p>
@@ -55,7 +54,7 @@ export default function Features() {
 
           {/* Feature 2 */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+            <Card className="p-8 bg-linear-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
               <div className="w-full">
                 <ChartLine className="w-16 h-16 text-primary mx-auto mb-4" />
                 <div className="flex items-end justify-center gap-2">
@@ -92,7 +91,7 @@ export default function Features() {
                 Track your complete 365-day journey with a visual calendar showing every completed day. Visualize your commitment and watch your transformation unfold in real-time. Never lose sight of your progress.
               </p>
             </div>
-            <Card className="order-1 md:order-2 p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+            <Card className="order-1 md:order-2 p-8 bg-linear-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
               <div className="grid grid-cols-7 gap-2">
                 {Array.from({ length: 28 }).map((_, i) => (
                   <div 
@@ -108,7 +107,7 @@ export default function Features() {
 
           {/* Feature 4 */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
+            <Card className="p-8 bg-linear-to-br from-primary/5 to-primary/10 border-primary/20 min-h-[280px] flex items-center justify-center">
               <div className="text-center space-y-6">
                 <Flame className="w-20 h-20 text-primary mx-auto" />
                 <div className="text-5xl font-black text-primary">20</div>

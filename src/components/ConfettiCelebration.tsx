@@ -20,7 +20,8 @@ export function ConfettiCelebration({ trigger, color  }: ConfettiCelebrationProp
       }
 
       function fire(particleRatio: number, opts: confetti.Options) {
-        confetti({
+        const confettiFn = confetti as unknown as (options: confetti.Options) => void
+        confettiFn({
           ...defaults,
           ...opts,
           particleCount: Math.floor(count * particleRatio),
