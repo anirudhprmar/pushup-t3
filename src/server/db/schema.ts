@@ -234,6 +234,89 @@ export const tasksRelations = relations(tasks,({one})=>({
 }))
 
 
+// ─────────────────────────────────────
+// SEO Content Tables (Programmatic SEO)
+// ─────────────────────────────────────
+
+export const seoTopics = createTable(
+  "seo_topics",
+  (d) => ({
+    id: d.uuid("id").defaultRandom().primaryKey(),
+    slug: d.text("slug").notNull().unique(),
+    title: d.text("title").notNull(),
+    description: d.text("description").notNull(),
+    category: d.text("category").notNull(),
+    metaTitle: d.text("meta_title"),
+    metaDescription: d.text("meta_description"),
+    content: d.text("content"),
+    isPublished: d.boolean("is_published").default(false).notNull(),
+    publishedAt: d.timestamp("published_at"),
+    createdAt: d.timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+    updatedAt: d.timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
+  }),
+  (t) => [
+    index("seo_topics_slug_idx").on(t.slug),
+    index("seo_topics_category_idx").on(t.category),
+    index("seo_topics_published_idx").on(t.isPublished),
+  ]
+);
+
+export const seoPages = createTable(
+  "seo_pages",
+  (d) => ({
+    id: d.uuid("id").defaultRandom().primaryKey(),
+    topicId: d.uuid("topic_id").references(() => seoTopics.id, { onDelete: "cascade" }),
+    slug: d.text("slug").notNull().unique(),
+    title: d.text("title").notNull(),
+    description: d.text("description").notNull(),
+    metaTitle: d.text("meta_title"),
+    metaDescription: d.text("meta_description"),
+    content: d.text("content").notNull(),
+    keywords: d.text("keywords").array(),
+    schemaType: d.text("schema_type").default("Article"), // Article, HowTo, FAQ
+    isPublished: d.boolean("is_published").default(false).notNull(),
+    publishedAt: d.timestamp("published_at"),
+    createdAt: d.timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+    updatedAt: d.timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
+  }),
+  (t) => [
+    index("seo_pages_slug_idx").on(t.slug),
+    index("seo_pages_topic_idx").on(t.topicId),
+    index("seo_pages_published_idx").on(t.isPublished),
+    index("seo_pages_category_idx").on(t.schemaType),
+  ]
+);
+
+export const seoFaqs = createTable(
+  "seo_faqs",
+  (d) => ({
+    id: d.uuid("id").defaultRandom().primaryKey(),
+    pageId: d.uuid("page_id").references(() => seoPages.id, { onDelete: "cascade" }),
+    question: d.text("question").notNull(),
+    answer: d.text("answer").notNull(),
+    sortOrder: d.integer("sort_order").default(0),
+    createdAt: d.timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+  }),
+  (t) => [
+    index("seo_faqs_page_idx").on(t.pageId),
+    index("seo_faqs_sort_idx").on(t.pageId, t.sortOrder),
+  ]
+);
+
+// SEO Relations
+export const seoTopicsRelations = relations(seoTopics, ({ many }) => ({
+  pages: many(seoPages),
+}));
+
+export const seoPagesRelations = relations(seoPages, ({ one, many }) => ({
+  topic: one(seoTopics, { fields: [seoPages.topicId], references: [seoTopics.id] }),
+  faqs: many(seoFaqs),
+}));
+
+export const seoFaqsRelations = relations(seoFaqs, ({ one }) => ({
+  page: one(seoPages, { fields: [seoFaqs.pageId], references: [seoPages.id] }),
+}));
+
 
 //________ Better Auth____________
 

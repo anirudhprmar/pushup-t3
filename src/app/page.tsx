@@ -1,16 +1,16 @@
-"use client"
-
 import Features from "~/components/Features"
 import HeroSection from "~/components/HeroSection"
 import Navbar from "~/components/Navbar"
 import Footer from "~/components/Footer"
 import LandingCTA from "~/components/LandingCTA"
 import FAQ from "~/components/FAQ"
-// import Demo from "~/components/Demo"
+import { LandingPageSchema } from "~/components/seo/LandingPageSchema"
 
 export default function Landing() {
   return (
     <div className="light relative min-h-full overflow-hidden w-full bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+      {/* Structured Data for SEO */}
+      <LandingPageSchema />
 
       <header className="w-full">
         <Navbar />

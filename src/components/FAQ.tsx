@@ -7,6 +7,7 @@ import {
   AccordionTrigger, 
   AccordionContent 
 } from "~/components/ui/accordion"
+import { generateFAQSchema, renderJsonLd } from "~/lib/seo/schemaGenerators"
 
 const faqData = [
   {
@@ -36,9 +37,18 @@ const faqData = [
   }
 ]
 
+// Generate FAQ schema for rich search results
+const faqSchema = generateFAQSchema(faqData)
+
 export default function FAQ() {
   return (
     <section className="py-24 bg-white">
+      {/* JSON-LD FAQ Schema for rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: renderJsonLd(faqSchema) }}
+      />
+      
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-16">

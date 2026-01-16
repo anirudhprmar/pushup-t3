@@ -5,6 +5,7 @@ import { goalsRouter } from "./routers/goals.router";
 import { tasksRouter } from "./routers/tasks.router";
 import { weeklyGoalsRouter } from "./routers/weekly-goals.router";
 import { notificationRouter } from "./routers/notification.router";
+import { seoRouter } from "./routers/seo.router";
 
 /**
  * This is the primary router for your server.
@@ -13,11 +14,12 @@ import { notificationRouter } from "./routers/notification.router";
  */
 export const appRouter = createTRPCRouter({
   user: userRouter,
-  habits:habitRouter,
-  goals:goalsRouter,
-  tasks:tasksRouter,
-  weeklyGoals:weeklyGoalsRouter,
-  notification:notificationRouter
+  habits: habitRouter,
+  goals: goalsRouter,
+  tasks: tasksRouter,
+  weeklyGoals: weeklyGoalsRouter,
+  notification: notificationRouter,
+  seo: seoRouter,
 });
 
 // export type definition of API
