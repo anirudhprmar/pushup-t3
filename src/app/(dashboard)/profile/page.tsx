@@ -22,7 +22,7 @@ export default async function profile() {
       <main className="min-h-screen">
         <div className="mx-auto max-w-4xl p-3">
           <header className="flex items-center justify-between gap-2">
-            <h1 className="font-bold text-3xl">Hi!, {user.name.split(" ")[0]}</h1>
+            <h1 className="font-bold text-3xl">Hi!, {user.name?.split(" ")[0] ?? "there"}</h1>
             <p className="text-3xl text-muted-foreground tracking-tighter" aria-label={`Year ${year}`}>
               {year}
             </p>

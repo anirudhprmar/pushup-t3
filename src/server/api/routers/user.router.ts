@@ -7,11 +7,9 @@ export const userRouter = createTRPCRouter({
   me: protectedProcedure
     .query(async ({ ctx }) => {
     const [userInfo] = await ctx.db.select().from(user).where(eq(user.id,ctx.userId));
-    if(!userInfo){
-      throw new Error("User not found")
-    }
-
-    return userInfo;
+    
+    // Return null instead of throwing - allows page to handle gracefully
+    return userInfo ?? null;
     }),
 
   getLeaderboard: protectedProcedure
