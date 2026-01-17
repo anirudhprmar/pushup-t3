@@ -3,7 +3,7 @@ import { DemoPlayer } from './DemoPlayer'
 
 const VIDEO_URL = "https://163jz9wo57.ufs.sh/f/LDDo8gC5wt4WylurXtf052OATN0ZbPCt3dHJxDLSQe9wFaEv"
 
-export default async function Demo() {
+export default function Demo() {
   return (
     <section className="py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
